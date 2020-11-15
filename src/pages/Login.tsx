@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import { useHistory, Link } from "react-router-dom";
-import { useAuthentication } from "../../context/authentication";
+import React, { useState } from 'react';
+import { useHistory, Link } from 'react-router-dom';
+import { useAuthentication } from '../context/authentication';
 
-export const Login = () => {
+const LoginPage: React.FC = () => {
   const { push } = useHistory();
   const { doLogin } = useAuthentication();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formValues, setFormValues] = useState({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   });
 
   const onSubmit = async () => {
@@ -19,7 +19,7 @@ export const Login = () => {
 
       await doLogin(email, password);
 
-      push("/");
+      push('/');
     } catch (e) {
       setIsSubmitting(false);
     }
@@ -34,7 +34,7 @@ export const Login = () => {
 
   return (
     <form>
-      <div style={{ display: "flex", flexDirection: "column" }}>
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
         <div>
           <label htmlFor="email">Email</label>
           <input
@@ -59,17 +59,19 @@ export const Login = () => {
         </div>
         <div
           style={{
-            display: "flex",
-            flexDirection: "column",
-            width: "fit-content",
+            display: 'flex',
+            flexDirection: 'column',
+            width: 'fit-content',
           }}
         >
           <button type="submit" disabled={isSubmitting} onClick={onSubmit}>
-            {isSubmitting ? "logging..." : "login"}
+            {isSubmitting ? 'logging...' : 'login'}
           </button>
-          <Link to="/register">I don't have an account yet!</Link>
+          <Link to="/register">I don&apos;t have an account yet!</Link>
         </div>
       </div>
     </form>
   );
 };
+
+export default LoginPage;

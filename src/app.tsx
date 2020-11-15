@@ -1,42 +1,15 @@
-import React, { useState } from "react";
-import { Redirect, Switch, Route } from "react-router-dom";
-import { Home } from "./pages/Home";
-import { Login } from "./pages/Login";
-import { Register } from "./pages/Register";
-import { useAuthentication } from "./context/authentication";
+import React from 'react';
+import { Switch, Route } from 'react-router-dom';
+import Routes from './routes/routes';
 
-export const App = () => {
-  const { isFetchingUser, isLogged } = useAuthentication();
-
-  if (!isLogged && isFetchingUser) return <h1>Loading user...</h1>;
-
-  return isLogged ? <AuthenticatedApp /> : <UnauthenticatedApp />;
-};
-
-const AuthenticatedApp = () => {
-  const { isLogged } = useAuthentication();
-
-  if (!isLogged) return <Redirect to="/login" />;
-
-  return (
-    <Switch>
-      <Route path="/" exact>
-        <Home />
+const App: React.FC = () => (
+  <Switch>
+    {Routes.map((route) => (
+      <Route exact path={route.path} key={route.path}>
+        <route.component />
       </Route>
-      <Route path="*">Error 404 - Page not found!</Route>
-    </Switch>
-  );
-};
+    ))}
+  </Switch>
+);
 
-const UnauthenticatedApp = () => {
-  return (
-    <Switch>
-      <Route exact path={["/", "/login"]}>
-        <Login />
-      </Route>
-      <Route exact path="/register">
-        <Register />
-      </Route>
-    </Switch>
-  );
-};
+export default App;

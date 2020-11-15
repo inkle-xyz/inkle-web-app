@@ -1,17 +1,17 @@
-import React, { createContext, useContext, useState } from "react";
-import firebase from "firebase/app";
-import "firebase/firestore";
-import "firebase/auth";
+import React, { createContext, useContext, useState } from 'react';
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+import 'firebase/auth';
 
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_API_KEY,
-  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
-  databaseURL: process.env.REACT_APP_DATABASE_URL,
-  projectId: process.env.REACT_APP_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
-  appId: process.env.REACT_APP_APP_ID,
-  measurementId: process.env.REACT_APP_MEASUREMENT_ID,
+  apiKey: 'AIzaSyBQunwDb9e01Xd5-mGC2hkeSHtmbwsveWI',
+  authDomain: 'inkle-xyz.firebaseapp.com',
+  databaseURL: 'https://inkle-xyz.firebaseio.com',
+  projectId: 'inkle-xyz',
+  storageBucket: 'inkle-xyz.appspot.com',
+  messagingSenderId: '446531057115',
+  appId: '1:446531057115:web:14d723ad330f92f43fe3fe',
+  measurementId: 'G-SLW1M3QVYD',
 };
 
 firebase.initializeApp(firebaseConfig);
@@ -63,44 +63,42 @@ function FirebaseProvider({ children }: TrackingProviderProps) {
     setIsFetchingUser(false);
   });
 
-  const createUserOnFirebase: createUserOnFirebaseType = (email, password) =>
-    new Promise(async (resolve, reject) => {
-      try {
-        const firebaseUser = await auth.createUserWithEmailAndPassword(
-          email,
-          password
-        );
+  const createUserOnFirebase: createUserOnFirebaseType = (email, password) => new Promise(async (resolve, reject) => {
+    try {
+      const firebaseUser = await auth.createUserWithEmailAndPassword(
+        email,
+        password,
+      );
 
-        if (!firebaseUser.user) {
-          reject();
-          return;
-        }
-
-        await usersCollection.doc(firebaseUser.user.uid).set({
-          email: firebaseUser.user.email,
-        });
-
-        resolve();
-      } catch (e) {
-        reject(e);
+      if (!firebaseUser.user) {
+        reject();
+        return;
       }
-    });
 
-  const doUserLoginOnFirebase: doUserLoginOnFirebaseType = (email, password) =>
-    new Promise(async (resolve, reject) => {
-      try {
-        await auth.signInWithEmailAndPassword(email, password);
+      await usersCollection.doc(firebaseUser.user.uid).set({
+        email: firebaseUser.user.email,
+      });
 
-        resolve();
-      } catch (e) {
-        reject(e);
-      }
-    });
+      resolve();
+    } catch (e) {
+      reject(e);
+    }
+  });
+
+  const doUserLoginOnFirebase: doUserLoginOnFirebaseType = (email, password) => new Promise(async (resolve, reject) => {
+    try {
+      await auth.signInWithEmailAndPassword(email, password);
+
+      resolve();
+    } catch (e) {
+      reject(e);
+    }
+  });
 
   const logoutUserFromFirebase = async () => await auth.signOut();
 
   // FIRESTORE
-  const usersCollection = firestore.collection("users");
+  const usersCollection = firestore.collection('users');
 
   return (
     <FirebaseContext.Provider
@@ -121,7 +119,7 @@ function useFirebase() {
   const context = useContext(FirebaseContext);
 
   if (context === undefined) {
-    throw new Error("useFirebase must be used within a FirebaseProvider");
+    throw new Error('useFirebase must be used within a FirebaseProvider');
   }
 
   return context;

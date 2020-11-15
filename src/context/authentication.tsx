@@ -1,12 +1,12 @@
-import React, { createContext, ReactNode, useContext } from "react";
-import { useFirebase } from "./firebase";
+import React, { createContext, ReactNode, useContext } from 'react';
+import { useFirebase } from './firebase';
 
 type doLoginType = (email: string, password: string) => Promise<void>;
 type doRegisterType = (email: string, password: string) => Promise<void>;
 type doLogoutType = () => Promise<void>;
 
 type AuthenticationContextState = {
-  isLogged: boolean;
+  isLoggedIn: boolean;
   isFetchingUser: boolean;
   user: firebase.User | null;
 
@@ -34,34 +34,32 @@ const AuthenticationProvider = ({ children }: AuthenticationProviderProps) => {
 
   const getLoggedUser = () => user;
 
-  const doLogin: doLoginType = (email, password) =>
-    new Promise(async (resolve, reject) => {
-      try {
-        await doUserLoginOnFirebase(email, password);
+  const doLogin: doLoginType = (email, password) => new Promise(async (resolve, reject) => {
+    try {
+      await doUserLoginOnFirebase(email, password);
 
-        resolve();
-      } catch (e) {
-        reject(e);
-      }
-    });
+      resolve();
+    } catch (e) {
+      reject(e);
+    }
+  });
 
-  const doRegister: doRegisterType = (email, password) =>
-    new Promise(async (resolve, reject) => {
-      try {
-        await createUserOnFirebase(email, password);
+  const doRegister: doRegisterType = (email, password) => new Promise(async (resolve, reject) => {
+    try {
+      await createUserOnFirebase(email, password);
 
-        resolve();
-      } catch (e) {
-        reject(e);
-      }
-    });
+      resolve();
+    } catch (e) {
+      reject(e);
+    }
+  });
 
   const doLogout: doLogoutType = async () => await logoutUserFromFirebase();
 
   return (
     <AuthenticationContext.Provider
       value={{
-        isLogged: !!getLoggedUser(),
+        isLoggedIn: !!getLoggedUser(),
         user: getLoggedUser(),
         isFetchingUser,
         doLogin,
@@ -79,7 +77,7 @@ const useAuthentication = () => {
 
   if (context === undefined) {
     throw new Error(
-      "useAuthentication must be used within a AuthenticationProvider"
+      'useAuthentication must be used within a AuthenticationProvider',
     );
   }
 

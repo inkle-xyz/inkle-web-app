@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import { useHistory, Link } from "react-router-dom";
-import { useAuthentication } from "../../context/authentication";
+import React, { useState } from 'react';
+import { useHistory, Link } from 'react-router-dom';
+import { useAuthentication } from '../context/authentication';
 
-export const Register = () => {
+const RegisterPage: React.FC = () => {
   const { push } = useHistory();
   const { doRegister } = useAuthentication();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formValues, setFormValues] = useState({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   });
 
   const onSubmit = async () => {
@@ -19,7 +19,7 @@ export const Register = () => {
 
       await doRegister(email, password);
 
-      push("/");
+      push('/');
     } catch (e) {
       setIsSubmitting(false);
     }
@@ -34,7 +34,7 @@ export const Register = () => {
 
   return (
     <form>
-      <div style={{ display: "flex", flexDirection: "column" }}>
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
         <div>
           <label htmlFor="email">Email</label>
           <input
@@ -59,13 +59,13 @@ export const Register = () => {
         </div>
         <div
           style={{
-            display: "flex",
-            flexDirection: "column",
-            width: "fit-content",
+            display: 'flex',
+            flexDirection: 'column',
+            width: 'fit-content',
           }}
         >
           <button disabled={isSubmitting} onClick={onSubmit}>
-            {isSubmitting ? "registering..." : "register"}
+            {isSubmitting ? 'registering...' : 'register'}
           </button>
           <Link to="/login">I already have an account</Link>
         </div>
@@ -73,3 +73,5 @@ export const Register = () => {
     </form>
   );
 };
+
+export default RegisterPage;
