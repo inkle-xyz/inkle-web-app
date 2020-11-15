@@ -2,8 +2,8 @@ import React from 'react';
 import { Spinner, Box } from '@chakra-ui/react';
 
 type LoadingPageProps = {
-  width: string;
-  height: string;
+  width?: string;
+  height?: string;
 };
 
 const LoadingPage: React.FC<LoadingPageProps> = ({
