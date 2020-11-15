@@ -1,7 +1,6 @@
 import React from 'react';
-import HomePage from '../pages/Home';
-import LoginPage from '../pages/Login';
-import RegisterPage from '../pages/Register';
+import HomePage from '../pages/HomePage';
+import AuthPage from '../pages/AuthPage';
 
 type Route = {
   path: string;
@@ -14,12 +13,8 @@ const Routes: Route[] = [
     component: HomePage,
   },
   {
-    path: '/login',
-    component: LoginPage,
-  },
-  {
-    path: '/register',
-    component: RegisterPage,
+    path: '/auth',
+    component: AuthPage,
   },
 ];
 
