@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Route, Redirect, useHistory } from 'react-router-dom';
+import { Route, useHistory } from 'react-router-dom';
 import { auth } from '../firebase.config';
 import LoadingPage from '../pages/LoadingPage';
 
-const ProtectedRoute: React.FC = ({ children, ...rest }) => {
+type Props = {
+  exact: boolean,
+  path: string,
+  component: React.FC
+}
+
+const ProtectedRoute: React.FC<Props> = ({ component: Component, ...rest }) => {
   const [authState, setAuthState] = useState({
     isAuthenticated: true,
     initializing: true,
@@ -17,20 +23,18 @@ const ProtectedRoute: React.FC = ({ children, ...rest }) => {
         initializing: false,
       });
     } else {
-      history.push('/login');
+      history.push('/auth');
     }
   }), [setAuthState]);
   return (
-    <Route
-      {...rest}
-      render={() => (authState.initializing ? (
-        <LoadingPage />
-      ) : authState.isAuthenticated ? (
-        { children }
-      ) : (
-        <Redirect to="/login" />
-      ))}
-    />
+    authState.initializing ? <LoadingPage /> : (
+      <Route
+        {...rest}
+        component={() => (
+          <Component />
+        )}
+      />
+    )
   );
 };
 

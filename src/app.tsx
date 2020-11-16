@@ -1,14 +1,16 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import Routes from './routes/routes';
+import HomePage from './pages/HomePage';
+import AuthPage from './pages/AuthPage';
+import AppContainer from './containers/AppContainer';
 
 const App: React.FC = () => (
   <Switch>
-    {Routes.map((route) => (
-      <Route exact path={route.path} key={route.path}>
-        <route.component />
-      </Route>
-    ))}
+    <AppContainer>
+      <Route path="/" component={HomePage} exact />
+    </AppContainer>
+    <Route path="/auth" component={AuthPage} exact />
+
   </Switch>
 );
 
