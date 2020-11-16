@@ -30,7 +30,7 @@ const SearchSortBar: React.FC<Props> = ({
       <Flex
         alignItems="center"
       >
-        <Heading as="h3" size="md" whiteSpace="nowrap" mr={4}>{ title }</Heading>
+        <Heading as="h3" size="lg" whiteSpace="nowrap" mr={4}>{ title }</Heading>
         <InputGroup>
           <InputLeftElement pointerEvents="none">
             <SearchIcon color="gray.300" />

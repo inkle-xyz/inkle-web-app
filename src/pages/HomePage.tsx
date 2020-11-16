@@ -1,6 +1,8 @@
-import { Box } from '@chakra-ui/react';
+import { Box, SimpleGrid } from '@chakra-ui/react';
 import React from 'react';
-import SearchSortBar from '../organisms/search-sort-bar';
+import SearchSortBar from '../organisms/SearchSortBar';
+import WidgetCard from '../organisms/WidgetCard';
+import EmptyWidgetCard from '../organisms/EmptyWidgetCard';
 
 const HomePage: React.FC = () => {
   const searchHandler = (searchTerm: string): void => {
@@ -12,8 +14,35 @@ const HomePage: React.FC = () => {
   };
 
   return (
-    <Box mt={5}>
-      <SearchSortBar title="My Widgets" searchHandler={searchHandler} sortHandler={sortHandler} options={['By Name']} />
+    <Box>
+      <Box mt="4rem">
+        <SearchSortBar
+          title="My Widgets"
+          searchHandler={searchHandler}
+          sortHandler={sortHandler}
+          options={['By Name']}
+        />
+        <SimpleGrid columns={{ sm: 1, md: 3 }} spacing={10} mt={10}>
+          <WidgetCard />
+          <WidgetCard />
+          <EmptyWidgetCard />
+        </SimpleGrid>
+      </Box>
+      <Box mt="4rem">
+        <SearchSortBar
+          title="Explore Widgets"
+          searchHandler={searchHandler}
+          sortHandler={sortHandler}
+          options={['By Name']}
+        />
+        <SimpleGrid columns={{ sm: 1, md: 3 }} spacing={10} mt={10}>
+          <WidgetCard />
+          <WidgetCard />
+          <WidgetCard />
+          <WidgetCard />
+          <WidgetCard />
+        </SimpleGrid>
+      </Box>
     </Box>
   );
 };
