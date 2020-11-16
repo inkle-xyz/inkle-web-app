@@ -1,8 +1,9 @@
 import React from 'react';
-import exp from 'constants';
-import {LiveEditor, LiveError, LivePreview, LiveProvider} from 'react-live';
+import {
+  LiveEditor, LiveError, LivePreview, LiveProvider,
+} from 'react-live';
 import styled from '@emotion/styled';
-import {css} from '@emotion/react';
+import { css } from '@emotion/react';
 import dracula from 'prism-react-renderer/themes/dracula';
 
 const StyledProvider = styled(LiveProvider)`
@@ -69,7 +70,7 @@ const StyledError = styled(LiveError)`
 `;
 
 const LiveEdit: React.FC = () => (
-  <StyledProvider theme={dracula} code={'<p>Test</p>'}>
+  <StyledProvider theme={dracula} code="<p>Test</p>">
     <LiveWrapper>
       <StyledEditor>
         <LiveEditor />
@@ -79,6 +80,6 @@ const LiveEdit: React.FC = () => (
 
     <StyledError />
   </StyledProvider>
-)
+);
 
 export default LiveEdit;

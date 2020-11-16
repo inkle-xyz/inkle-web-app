@@ -7,7 +7,7 @@ import LogoIcon from '../assets/logo-icon.svg';
 
 const WidgetPage: React.FC = () => (
   <SimpleGrid columns={2} h="100vh">
-    <Box w="100%">
+    <Box w="100%" overflow="scroll">
       <Box maxWidth="500px" mx="auto">
         <Image src={LogoIcon} mt={5} />
         <WidgetPageLeft />

@@ -1,8 +1,8 @@
 import { Box, SimpleGrid } from '@chakra-ui/react';
 import React from 'react';
 import SearchSortBar from '../organisms/SearchSortBar';
-import WidgetCard from '../organisms/WidgetCard';
-import EmptyWidgetCard from '../organisms/EmptyWidgetCard';
+import WidgetCard from '../molecules/WidgetCard';
+import EmptyWidgetCard from '../molecules/EmptyWidgetCard';
 
 const HomePage: React.FC = () => {
   const searchHandler = (searchTerm: string): void => {
