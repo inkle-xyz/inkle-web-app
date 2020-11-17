@@ -3,102 +3,22 @@ import { ArrowBackIcon } from '@chakra-ui/icons';
 import {
   Box, Flex, FormLabel, Textarea, Text, Input, Switch, Divider, InputGroup, InputRightAddon, Spacer, Button,
 } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React from 'react';
 import { FiCopy } from 'react-icons/all';
 import { LiveEditor, LiveError } from 'react-live';
-import { SetterOrUpdater, useRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import styled from '@emotion/styled';
+import { useHistory } from 'react-router-dom';
 import WidgetTitleEditable from '../molecules/WidgetTitleEditable';
 import WidgetFormGroup from '../atoms/WidgetFormGroup';
-import { WidgetVariable, widgetVariableState } from '../recoil/atoms';
-
-interface WidgetVariableBoxProps {
-  widgetVariable: WidgetVariable;
-}
-
-/**
- * Higher order function to update a widgetVariables field
- * @param {string} field - The field to update
- * @param {Function} setFunction - the setState function to update the global state
- */
-const updateWidgetVariableField = (
-  field: string,
-  setFunction: SetterOrUpdater<WidgetVariable[]>,
-) => (newValue: string, id: string, widgetVariables: WidgetVariable[]) => {
-  const newWidgetVariables = JSON.parse(JSON.stringify(widgetVariables));
-  for (let i = 0; i < newWidgetVariables.length; i += 1) {
-    if (newWidgetVariables[i].id === id) {
-      newWidgetVariables[i][field] = newValue;
-    }
-  }
-  setFunction(newWidgetVariables);
-};
-
-const WidgetVariableBox: React.FC<WidgetVariableBoxProps> = ({ widgetVariable: { name, description, id } }) => {
-  const [widgetVariables, setWidgetVariables] = useRecoilState(widgetVariableState);
-
-  return (
-    <Box mt={3} p={3} borderWidth="1px" borderRadius="lg">
-      <Text color="gray.700" fontWeight="semibold">
-        Variable Name
-      </Text>
-      <Input placeholder="variable_name"
-        value={name}
-        mt={2}
-        onChange={(e) => updateWidgetVariableField(
-          'name',
-          setWidgetVariables,
-        )(e.target.value, id, widgetVariables)}
-      />
-      <Text mt={3} color="gray.700" fontWeight="semibold">
-        Description
-      </Text>
-      <Textarea placeholder="Text Description"
-        value={description}
-        mt={2}
-        onChange={(e) => updateWidgetVariableField(
-          'description',
-          setWidgetVariables,
-        )(e.target.value, id, widgetVariables)}
-      />
-    </Box>
-  );
-};
-
-interface WidgetDefaultValueBoxProps {
-  widgetVariable: WidgetVariable;
-}
-
-const WidgetDefaultValueBox: React.FC<WidgetDefaultValueBoxProps> = ({
-  widgetVariable: {
-    name, description, id, defaultValue,
-  },
-}) => {
-  const [widgetVariables, setWidgetVariables] = useRecoilState(widgetVariableState);
-
-  return (
-    <Box mt={2}>
-      <FormLabel color="gray.300">
-        {name}
-        {' '}
-        -
-        {description}
-      </FormLabel>
-      <Input placeholder="Default Value"
-        value={defaultValue}
-        onChange={(e) => updateWidgetVariableField(
-          'defaultValue',
-          setWidgetVariables,
-        )(e.target.value, id, widgetVariables)}
-      />
-    </Box>
-  );
-};
+import { widgetSettingsState, widgetVariableState } from '../recoil/atoms';
+import WidgetVariableBox from '../molecules/WidgetVariableBox';
+import WidgetDefaultValueBox from '../molecules/WidgetDefaultValueBox';
 
 const StyledError = styled(LiveError)`
   display: block;
-  padding: .5rem 2rem;
-  background-color: #e72e2e;
+  padding: .5rem;
+  background-color: #ef4949;
   color: white;
   white-space: pre-wrap;
   text-align: left;
@@ -108,6 +28,8 @@ const StyledError = styled(LiveError)`
 
 const WidgetPageLeft: React.FC = () => {
   const [widgetVariables, setWidgetVariables] = useRecoilState(widgetVariableState);
+  const [widgetSettings, setWidgetSettings] = useRecoilState(widgetSettingsState);
+  const history = useHistory();
 
   const createNewWidgetVariable = () => {
     const newWidgetVariables = JSON.parse(JSON.stringify(widgetVariables));
@@ -123,7 +45,7 @@ const WidgetPageLeft: React.FC = () => {
   return (
     <Box mt="4rem">
       <Flex alignItems="center">
-        <ArrowBackIcon w={8} h={8} mr={4} />
+        <ArrowBackIcon w={8} h={8} mr={4} onClick={() => history.goBack()} />
         <WidgetTitleEditable />
       </Flex>
 
@@ -131,14 +53,18 @@ const WidgetPageLeft: React.FC = () => {
         <FormLabel color="gray.300">
           Description
         </FormLabel>
-        <Textarea placeholder="Widget description" />
+        <Textarea placeholder="Widget description"
+          value={widgetSettings.description}
+          onChange={(e) => setWidgetSettings({ ...widgetSettings, description: e.target.value })}
+        />
       </Box>
 
       <WidgetFormGroup title="Data">
         {
-          widgetVariables.map((widgetVariable) => (
-            <WidgetDefaultValueBox widgetVariable={widgetVariable} />
-          ))
+          widgetVariables.length !== 0
+            ? widgetVariables.map((widgetVariable) => (
+              <WidgetDefaultValueBox widgetVariable={widgetVariable} key={`default-value ${widgetVariable.id}`} />
+            )) : <Text mt={2} color="gray.500">No Variables</Text>
         }
       </WidgetFormGroup>
       <WidgetFormGroup title="Style">
@@ -147,7 +73,11 @@ const WidgetPageLeft: React.FC = () => {
             Dark Mode
           </FormLabel>
           <Spacer />
-          <Switch id="dark-mode" mt={1} />
+          <Switch id="dark-mode"
+            mt={1}
+            defaultChecked={widgetSettings.isDarkMode}
+            onChange={() => setWidgetSettings({ ...widgetSettings, isDarkMode: !widgetSettings.isDarkMode })}
+          />
         </Flex>
       </WidgetFormGroup>
       <WidgetFormGroup title="Notion Link">
@@ -155,7 +85,7 @@ const WidgetPageLeft: React.FC = () => {
           <Input
             type="phone"
             borderLeftRadius="0"
-            value="inkle.xyz/widgets/GeuIflafaqcnvmNfeaqpzp"
+            value={widgetSettings.deployedLink}
             color="black"
             fontWeight="semibold"
             isDisabled
@@ -168,13 +98,15 @@ const WidgetPageLeft: React.FC = () => {
       <Divider my={5} />
       <WidgetFormGroup title="Edit Widgets">
         {
-          widgetVariables.map(
-            (widgetVariable) => (
-              <WidgetVariableBox
-                widgetVariable={widgetVariable}
-              />
-            ),
-          )
+          widgetVariables.length !== 0
+            ? widgetVariables.map(
+              (widgetVariable) => (
+                <WidgetVariableBox
+                  key={`widget-variable-box-${widgetVariable.id}`}
+                  widgetVariable={widgetVariable}
+                />
+              ),
+            ) : <Text mt={2} color="gray.500">No Variables</Text>
         }
         <Button
           variant="outline"
@@ -193,10 +125,10 @@ const WidgetPageLeft: React.FC = () => {
         </Text>
         {/* Really nasty workaround down here I wish we didn't need
         // @ts-ignore */}
-        <LiveEditor onChangeCapture={(e) => {
+        <LiveEditor onChangeCapture={() => {
           // console.log(e.currentTarget?.firstChild.value)
         }}
-          style={{ height: '400px', borderRadius: '4px', overflow: 'scroll' }}
+          style={{ borderRadius: '4px' }}
         />
         <StyledError />
 

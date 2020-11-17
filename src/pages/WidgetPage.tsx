@@ -1,32 +1,53 @@
 import {
   Box, Center, Image, SimpleGrid,
 } from '@chakra-ui/react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { LivePreview, LiveProvider } from 'react-live';
 import dracula from 'prism-react-renderer/themes/dracula';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import LogoIcon from '../assets/logo-icon.svg';
 import WidgetPageLeft from '../organisms/WidgetPageLeft';
 import { widgetVariableState } from '../recoil/atoms';
 
 const prebuiltCode = `
-() => (
-  <h3>
-    So functional. Much wow! {widget_name}
-  </h3>
-)
+class Counter extends React.Component {
+  constructor() {
+    super()
+    this.state = { time: new Date().toLocaleTimeString() }
+  }
+
+  componentDidMount() {
+    this.interval = setInterval(() => {
+      this.setState(() => ({ time: new Date().toLocaleTimeString() }))
+    }, 1000)
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval)
+  }
+
+  render() {
+    return (
+      <div>
+        <h3 style={{fontWeight: 'bold', fontSize: '24px'}}>
+          {this.state.time}
+        </h3>
+      </div>
+    )
+  }
+}
 `;
 
 const WidgetPage: React.FC = () => {
-  const [widgetVariables, setWidgetVariables] = useRecoilState(widgetVariableState);
+  const widgetVariables = useRecoilValue(widgetVariableState);
 
   const passedProps: Record<string, any> = {};
 
-  for (let i = 0; i < widgetVariables.length; i++) {
-    passedProps[widgetVariables[i].name] = widgetVariables[i].defaultValue;
-  }
-
-  console.log(passedProps);
+  useEffect(() => {
+    for (let i = 0; i < widgetVariables.length; i += 1) {
+      passedProps[widgetVariables[i].name] = widgetVariables[i].defaultValue;
+    }
+  });
 
   return (
     <LiveProvider theme={dracula} code={prebuiltCode} scope={passedProps}>

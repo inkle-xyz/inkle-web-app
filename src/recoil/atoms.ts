@@ -18,3 +18,22 @@ export const widgetVariableState = atom<WidgetVariable[]>({
   key: 'widgetVariableState',
   default: [testWidgetVariable],
 });
+
+export interface WidgetSettings {
+  name: string;
+  description: string;
+  isDarkMode: boolean;
+  deployedLink: string;
+}
+
+const defaultWidgetSettings: WidgetSettings = {
+  name: 'New Widget',
+  description: 'This is a great widget',
+  isDarkMode: false,
+  deployedLink: 'inkle.xyz/widgets/GeuIflafaqcnvmNfeaqpzp',
+};
+
+export const widgetSettingsState = atom<WidgetSettings>({
+  key: 'widgetSettingsState',
+  default: defaultWidgetSettings,
+});
