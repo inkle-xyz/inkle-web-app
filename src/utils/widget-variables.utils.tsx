@@ -1,5 +1,5 @@
 import { SetterOrUpdater } from 'recoil';
-import { WidgetVariable } from '../recoil/atoms';
+import { WidgetVariable } from '../interfaces/widget.interface';
 
 /**
  * Higher order function to update a widgetVariables field
@@ -9,7 +9,7 @@ import { WidgetVariable } from '../recoil/atoms';
 export const updateWidgetVariableField = (
   field: string,
   setFunction: SetterOrUpdater<WidgetVariable[]>,
-) => (newValue: string, id: string, widgetVariables: WidgetVariable[]) => {
+) => (newValue: string, id: string, widgetVariables: WidgetVariable[]): void => {
   const newWidgetVariables = JSON.parse(JSON.stringify(widgetVariables));
   for (let i = 0; i < newWidgetVariables.length; i += 1) {
     if (newWidgetVariables[i].id === id) {
@@ -19,7 +19,9 @@ export const updateWidgetVariableField = (
   setFunction(newWidgetVariables);
 };
 
-export const deleteWidgetVariable = (setFunction: SetterOrUpdater<WidgetVariable[]>) => (id: string, widgetVariables: WidgetVariable[]) => {
+export const deleteWidgetVariable = (
+  setFunction: SetterOrUpdater<WidgetVariable[]>,
+) => (id: string, widgetVariables: WidgetVariable[]): void => {
   const newWidgetVariables: WidgetVariable[] = JSON.parse(JSON.stringify(widgetVariables));
   setFunction(newWidgetVariables.filter((variable) => variable.id !== id));
 };

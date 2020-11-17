@@ -4,11 +4,12 @@ import { auth, db, googleAuthProvider } from '../firebase.config';
 const userCollection = db.collection('users');
 
 const createUserInDb = (
+  id: string,
   email: string,
   displayName?: string | null, photoUrl?: string | null,
 ): Promise<any> => new Promise((resolve) => {
   userCollection
-    .doc(email)
+    .doc(id)
     .set({
       email,
       displayName,
@@ -16,7 +17,7 @@ const createUserInDb = (
       createdAt: Date.now().toLocaleString(),
     }).then(() => {
       db.collection('users')
-        .doc(email)
+        .doc(id)
         .get()
         .then((user) => resolve(user));
     });
@@ -30,12 +31,14 @@ const authenticateUser = (): Promise<any> => new Promise(((resolve, reject) => {
       if (userFromAuth?.email === null) {
         reject(Error('No Email!'));
       } else {
-        const { email, photoURL, displayName } = userFromAuth;
-        userCollection.doc(email).get().then((doc) => {
+        const {
+          email, photoURL, displayName, uid,
+        } = userFromAuth;
+        userCollection.doc(uid).get().then((doc) => {
           if (doc.exists) {
             resolve(doc.data());
           }
-          createUserInDb(email, displayName, photoURL).then((user) => resolve(user));
+          createUserInDb(uid, email, displayName, photoURL).then((user) => resolve(user));
         });
       }
     } else {

@@ -2,7 +2,7 @@ import { Button, Container } from '@chakra-ui/react';
 import React from 'react';
 import { FaGoogle } from 'react-icons/all';
 import { useHistory } from 'react-router-dom';
-import { authenticateUser } from '../utils/auth.utils';
+import { authenticateUser } from '../services/auth.services';
 
 const AuthPage: React.FC = () => {
   const history = useHistory();

@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-first-prop-new-line */
 import { ArrowBackIcon } from '@chakra-ui/icons';
 import {
-  Box, Flex, FormLabel, Textarea, Text, Input, Switch, Divider, InputGroup, InputRightAddon, Spacer, Button,
+  Box, Flex, FormLabel, Textarea, Text, Input, Switch, Divider, InputGroup, InputRightAddon, Spacer, Button, IconButton,
 } from '@chakra-ui/react';
 import React from 'react';
 import { FiCopy } from 'react-icons/all';
@@ -45,7 +45,12 @@ const WidgetPageLeft: React.FC = () => {
   return (
     <Box mt="4rem">
       <Flex alignItems="center">
-        <ArrowBackIcon w={8} h={8} mr={4} onClick={() => history.goBack()} />
+        <IconButton aria-label="Icon button"
+          variant="ghost"
+          onClick={() => history.goBack()}
+          mr={4}
+          icon={<ArrowBackIcon w={8} h={8} />}
+        />
         <WidgetTitleEditable />
       </Flex>
 

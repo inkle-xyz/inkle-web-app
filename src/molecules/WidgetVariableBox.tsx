@@ -3,11 +3,12 @@ import { useRecoilState } from 'recoil';
 import {
   Box, Flex, Input, Text, Textarea, Spacer, Button,
 } from '@chakra-ui/react';
-import { WidgetVariable, widgetVariableState } from '../recoil/atoms';
+import { widgetVariableState } from '../recoil/atoms';
 import { deleteWidgetVariable, updateWidgetVariableField } from '../utils/widget-variables.utils';
+import { WidgetVariableState } from '../interfaces/widget.interface';
 
 interface WidgetVariableBoxProps {
-  widgetVariable: WidgetVariable;
+  widgetVariable: WidgetVariableState;
 }
 
 const WidgetVariableBox: React.FC<WidgetVariableBoxProps> = ({ widgetVariable: { name, description, id } }) => {
@@ -20,7 +21,13 @@ const WidgetVariableBox: React.FC<WidgetVariableBoxProps> = ({ widgetVariable: {
           Variable Name
         </Text>
         <Spacer />
-        <Button size="xs" colorScheme="red" onClick={() => deleteWidgetVariable(setWidgetVariables)(id, widgetVariables)}>Remove</Button>
+        <Button
+          size="xs"
+          colorScheme="red"
+          onClick={() => deleteWidgetVariable(setWidgetVariables)(id, widgetVariables)}
+        >
+          Remove
+        </Button>
       </Flex>
       <Input
         placeholder="variable_name"

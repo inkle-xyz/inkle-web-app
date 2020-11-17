@@ -38,12 +38,17 @@ class Counter extends React.Component {
 }
 `;
 
-const WidgetPage: React.FC = () => {
+type WidgetPageProps = {
+  id: string;
+}
+
+const WidgetPage: React.FC<WidgetPageProps> = ({ id }) => {
   const widgetVariables = useRecoilValue(widgetVariableState);
 
   const passedProps: Record<string, any> = {};
 
   useEffect(() => {
+    console.log(id);
     for (let i = 0; i < widgetVariables.length; i += 1) {
       passedProps[widgetVariables[i].name] = widgetVariables[i].defaultValue;
     }

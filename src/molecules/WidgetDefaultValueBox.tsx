@@ -1,11 +1,12 @@
 import React from 'react';
 import { useRecoilState } from 'recoil';
 import { Box, FormLabel, Input } from '@chakra-ui/react';
-import { WidgetVariable, widgetVariableState } from '../recoil/atoms';
+import { widgetVariableState } from '../recoil/atoms';
 import { updateWidgetVariableField } from '../utils/widget-variables.utils';
+import { WidgetVariableState } from '../interfaces/widget.interface';
 
 interface WidgetDefaultValueBoxProps {
-  widgetVariable: WidgetVariable;
+  widgetVariable: WidgetVariableState;
 }
 
 const WidgetDefaultValueBox: React.FC<WidgetDefaultValueBoxProps> = ({
