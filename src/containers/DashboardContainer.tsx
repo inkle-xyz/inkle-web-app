@@ -1,10 +1,10 @@
 import React from 'react';
 import { Container } from '@chakra-ui/react';
-import Navbar from '../organisms/Navbar';
+import DashboardNavbar from '../organisms/DashboardNavbar';
 
 const DashboardContainer: React.FC = ({ children }) => (
   <Container maxW="1440px">
-    <Navbar />
+    <DashboardNavbar />
     { children }
   </Container>
 );

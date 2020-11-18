@@ -1,5 +1,6 @@
 import firebase from 'firebase';
 import { auth, db, googleAuthProvider } from '../firebase.config';
+import { User } from '../interfaces/user.interface';
 
 const userCollection = db.collection('users');
 
@@ -49,7 +50,16 @@ const authenticateUser = (): Promise<any> => new Promise(((resolve, reject) => {
   });
 }));
 
+const getCurrentUser = (): Promise<User> => new Promise((resolve) => {
+  auth.onAuthStateChanged((user) => {
+    if (user) {
+      userCollection.doc(user.uid).get().then((u) => resolve(u.data() as User));
+    }
+  });
+});
+
 export {
   createUserInDb,
   authenticateUser,
+  getCurrentUser,
 };

@@ -1,7 +1,6 @@
 export interface User {
   displayName: string;
   photoUrl: string;
+  createdAt: string;
   email: string;
-  templates: string[];
-  widgets: string[];
 }

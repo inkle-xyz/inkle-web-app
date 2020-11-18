@@ -86,7 +86,7 @@ const CommunityWidgets: React.FC = () => {
   return (
     <Box mt="4rem">
       <SearchSortBar
-        title="My Widgets"
+        title="Community 🌱"
         searchHandler={searchHandler}
         sortHandler={sortHandler}
         options={['By Name']}

@@ -68,7 +68,7 @@ const UserWidgets: React.FC = () => {
   return (
     <Box mt="4rem">
       <SearchSortBar
-        title="My Widgets"
+        title="My Widgets 📚"
         searchHandler={searchHandler}
         sortHandler={sortHandler}
         options={['By Name']}
