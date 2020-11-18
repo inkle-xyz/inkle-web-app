@@ -41,7 +41,7 @@ const WidgetPage: React.FC<WidgetPageProps> = ({ id }) => {
         hasInitialized: true,
       });
     }
-  });
+  }, []);
 
   if (state.loading || !selectedWidget) {
     return <LoadingPage />;

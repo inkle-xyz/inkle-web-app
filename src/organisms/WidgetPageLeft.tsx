@@ -134,10 +134,12 @@ const WidgetPageLeft: React.FC = () => {
                   // eslint-disable-next-line no-alert
                   if (window.confirm('Are you sure you want to exit without saving?')) {
                     setSelectedWidget(null);
+                    toast.closeAll();
                     history.goBack();
                   }
                 } else {
                   setSelectedWidget(null);
+                  toast.closeAll();
                   history.goBack();
                 }
               }}
@@ -222,7 +224,7 @@ const WidgetPageLeft: React.FC = () => {
 
           <Divider my={5} />
 
-          <Heading as="h3" size="md" mb={2}>Customize</Heading>
+          <Heading as="h3" size="md" mb={2}>Advanced</Heading>
 
           <WidgetFormGroup title="Edit Widgets">
             {
