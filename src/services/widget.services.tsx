@@ -85,3 +85,18 @@ export const cloneWidget = (
 });
 
 export const deleteWidget = (widgetId: string) => widgetsCollection.doc(widgetId).delete();
+
+export const createNewWidget = (currentUser: User) => {
+  const newWidget: Partial<Widget> = {
+    isFeatured: false,
+    variables: [],
+    name: 'New Widget',
+    authorName: currentUser.displayName,
+    code: '<div>Hello World</div>',
+    isPublished: false,
+    description: 'New Widget',
+    author: currentUser.id,
+    isDarkMode: false,
+  };
+  return widgetsCollection.add(newWidget);
+};

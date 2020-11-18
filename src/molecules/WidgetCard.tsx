@@ -1,9 +1,8 @@
 import {
-  Box, Button, Flex, Heading, Image, Tag, Text,
+  Box, Button, Flex, Heading, Tag, Text,
 } from '@chakra-ui/react';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import NoWidgetImage from './NoWidgetImage';
 import { Widget } from '../interfaces/widget.interface';
 
 type WidgetCardProps = {
@@ -18,7 +17,7 @@ const WidgetCard: React.FC<WidgetCardProps> = ({
 }) => {
   const history = useHistory();
   const {
-    name, description, image, id,
+    name, description, id,
   } = widget;
 
   const onClick = () => {
@@ -29,21 +28,20 @@ const WidgetCard: React.FC<WidgetCardProps> = ({
     <Flex
       borderRadius="lg"
       boxShadow="lg"
-      h="450px"
       flexDirection="column"
       overflow="hidden"
     >
-      <Box
-        flexGrow={1}
-        onClick={() => onClick()}
-      >
-        {
-          image
-            ? <Image src={image} />
-            : <NoWidgetImage />
+      {/* <Box */}
+      {/*  flexGrow={1} */}
+      {/*  onClick={() => onClick()} */}
+      {/* > */}
+      {/*  { */}
+      {/*    image */}
+      {/*      ? <Image src={image} /> */}
+      {/*      : <NoWidgetImage /> */}
 
-        }
-      </Box>
+      {/*  } */}
+      {/* </Box> */}
       <Box p={6}>
         <Heading
           mt="1"

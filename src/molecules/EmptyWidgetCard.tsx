@@ -3,10 +3,22 @@ import {
 } from '@chakra-ui/react';
 import React from 'react';
 
-const EmptyWidgetCard: React.FC = () => (
-  <Box borderWidth="3px" borderStyle="dashed" borderColor="gray.300" borderRadius="lg" w="100%" h="450px">
+type Params = {
+  onWidgetCreate: () => void;
+}
+
+const EmptyWidgetCard: React.FC<Params> = ({ onWidgetCreate }) => (
+  <Box borderWidth="3px" borderStyle="dashed" borderColor="gray.300" borderRadius="lg" w="100%" h="100%">
     <Center w="100%" h="100%">
-      <Button my="auto" mx="auto" colorScheme="yellow" color="white">+ Create New Widget</Button>
+      <Button
+        my="auto"
+        mx="auto"
+        colorScheme="yellow"
+        color="white"
+        onClick={() => onWidgetCreate()}
+      >
+        + Create New Widget
+      </Button>
     </Center>
   </Box>
 );

@@ -6,7 +6,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import SearchSortBar from './SearchSortBar';
 import WidgetCard from '../molecules/WidgetCard';
 import EmptyWidgetCard from '../molecules/EmptyWidgetCard';
-import { cloneWidget, getUsersWidgets } from '../services/widget.services';
+import { cloneWidget, createNewWidget, getUsersWidgets } from '../services/widget.services';
 import { Widget } from '../interfaces/widget.interface';
 import { userState, usersWidgetsState } from '../recoil/atoms';
 
@@ -77,24 +77,25 @@ const UserWidgets: React.FC = () => {
     }
   };
 
+  const onWidgetCreate = () => {
+    if (user) {
+      createNewWidget(user).then(() => getUsersWidgets().then((widgets) => setUsersWidgets(widgets)));
+    }
+  };
+
   const getWidgetsToRender = (): Widget[] => (state.isFiltered
     ? state.filteredUserWidgets : usersWidgets ?? []);
-
-  const sortHandler = (searchTerm: string): void => {
-    // console.log(searchTerm);
-  };
 
   return (
     <Box mt="4rem">
       <SearchSortBar
         title="My Widgets 📚"
         searchHandler={searchHandler}
-        sortHandler={sortHandler}
         options={['By Name']}
       />
       { state.loading
         ? (
-          <Center h="450px">
+          <Center h="100%">
             <Spinner
               thickness="4px"
               speed="0.65s"
@@ -116,7 +117,7 @@ const UserWidgets: React.FC = () => {
                 />
               ))
           }
-            <EmptyWidgetCard />
+            <EmptyWidgetCard onWidgetCreate={onWidgetCreate} />
           </SimpleGrid>
         )}
     </Box>

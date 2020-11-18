@@ -5,8 +5,8 @@ import {
 import React from 'react';
 
 type Props = {
-  searchHandler: (searchTerm: string) => void
-  sortHandler: (searchTerm: string) => void
+  searchHandler?: (searchTerm: string) => void
+  sortHandler?: (searchTerm: string) => void
   options: Array<string>
   title: string
 }
@@ -15,11 +15,15 @@ const SearchSortBar: React.FC<Props> = ({
   searchHandler, sortHandler, options, title,
 }) => {
   const onSearchChange = ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
-    searchHandler(value);
+    if (searchHandler) {
+      searchHandler(value);
+    }
   };
 
   const onSortChange = ({ target: { value } }: React.ChangeEvent<HTMLSelectElement>) => {
-    sortHandler(value);
+    if (sortHandler) {
+      sortHandler(value);
+    }
   };
 
   return (
@@ -31,19 +35,29 @@ const SearchSortBar: React.FC<Props> = ({
         alignItems="center"
       >
         <Heading as="h3" size="lg" whiteSpace="nowrap" mr={4} mb={1}>{ title }</Heading>
-        <InputGroup>
-          <InputLeftElement pointerEvents="none">
-            <SearchIcon color="gray.300" />
-          </InputLeftElement>
-          <Input placeholder="Search" onChange={onSearchChange} />
-        </InputGroup>
+        {
+          searchHandler
+            ? (
+              <InputGroup>
+                <InputLeftElement pointerEvents="none">
+                  <SearchIcon color="gray.300" />
+                </InputLeftElement>
+                <Input placeholder="Search" onChange={onSearchChange} />
+              </InputGroup>
+            ) : <Box />
+        }
       </Flex>
       <Box>
-        <Select mr="1rem" onChange={onSortChange}>
-          {
-            options.map((value) => <option value={value} key={value}>{value}</option>)
-          }
-        </Select>
+        {
+          sortHandler
+            ? (
+              <Select mr="1rem" onChange={onSortChange}>
+                {
+                options.map((value) => <option value={value} key={value}>{value}</option>)
+              }
+              </Select>
+            ) : <Box />
+        }
       </Box>
     </Flex>
   );

@@ -43,8 +43,6 @@ const CommunityWidgets: React.FC = () => {
     // eslint-disable-next-line
   }, []);
 
-  const searchHandler = (value: string) => console.log(value);
-  const sortHandler = (value: string) => console.log(value);
   const onWidgetClone = (widget: Widget) => {
     if (user) {
       cloneWidget(user, widget).then(() => getUsersWidgets().then((widgets) => setUsersWidgets(widgets)));
@@ -61,13 +59,11 @@ const CommunityWidgets: React.FC = () => {
     <Box my="4rem">
       <SearchSortBar
         title="Community 🌱"
-        searchHandler={searchHandler}
-        sortHandler={sortHandler}
         options={['By Name']}
       />
       { state.isLoading
         ? (
-          <Center h="450px">
+          <Center h="100%">
             <Spinner
               thickness="4px"
               speed="0.65s"
