@@ -7,7 +7,7 @@ type Props = {
 
 const WidgetFormGroup: React.FC<Props> = ({ children, title }) => (
   <Box mt={4}>
-    <Heading as="h4" size="md">{title}</Heading>
+    <Heading as="h4" size="sm">{title}</Heading>
     { children }
   </Box>
 );

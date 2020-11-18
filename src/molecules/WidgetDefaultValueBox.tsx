@@ -1,9 +1,10 @@
 import React from 'react';
 import { useRecoilState } from 'recoil';
-import { Box, FormLabel, Input } from '@chakra-ui/react';
+import { Box, Input } from '@chakra-ui/react';
 import { widgetVariableState } from '../recoil/atoms';
 import { updateWidgetVariableField } from '../utils/widget-variables.utils';
 import { WidgetVariableState } from '../interfaces/widget.interface';
+import WidgetPageFormLabel from '../atoms/WidgetPageFormLabel';
 
 interface WidgetDefaultValueBoxProps {
   widgetVariable: WidgetVariableState;
@@ -18,12 +19,12 @@ const WidgetDefaultValueBox: React.FC<WidgetDefaultValueBoxProps> = ({
 
   return (
     <Box mt={2}>
-      <FormLabel color="gray.300">
+      <WidgetPageFormLabel>
         {name}
         {' '}
         -
         {description}
-      </FormLabel>
+      </WidgetPageFormLabel>
       <Input
         placeholder="Default Value"
         value={defaultValue}

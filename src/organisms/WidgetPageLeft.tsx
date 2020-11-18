@@ -1,7 +1,19 @@
 /* eslint-disable react/jsx-first-prop-new-line */
 import { ArrowBackIcon } from '@chakra-ui/icons';
 import {
-  Box, Flex, FormLabel, Textarea, Text, Input, Switch, Divider, InputGroup, InputRightAddon, Spacer, Button, IconButton,
+  Box,
+  Flex,
+  Textarea,
+  Text,
+  Input,
+  Switch,
+  Divider,
+  InputGroup,
+  InputRightAddon,
+  Spacer,
+  Button,
+  IconButton,
+  Heading,
 } from '@chakra-ui/react';
 import React from 'react';
 import { FiCopy } from 'react-icons/all';
@@ -14,6 +26,7 @@ import WidgetFormGroup from '../atoms/WidgetFormGroup';
 import { widgetSettingsState, widgetVariableState } from '../recoil/atoms';
 import WidgetVariableBox from '../molecules/WidgetVariableBox';
 import WidgetDefaultValueBox from '../molecules/WidgetDefaultValueBox';
+import WidgetPageFormLabel from '../atoms/WidgetPageFormLabel';
 
 const StyledError = styled(LiveError)`
   display: block;
@@ -55,10 +68,11 @@ const WidgetPageLeft: React.FC = () => {
       </Flex>
 
       <Box>
-        <FormLabel color="gray.300">
+        <WidgetPageFormLabel>
           Description
-        </FormLabel>
+        </WidgetPageFormLabel>
         <Textarea placeholder="Widget description"
+          id="widget-description"
           value={widgetSettings.description}
           onChange={(e) => setWidgetSettings({ ...widgetSettings, description: e.target.value })}
         />
@@ -74,9 +88,9 @@ const WidgetPageLeft: React.FC = () => {
       </WidgetFormGroup>
       <WidgetFormGroup title="Style">
         <Flex mt={4} w="100%">
-          <FormLabel color="gray.500" htmlFor="dark-mode">
+          <WidgetPageFormLabel>
             Dark Mode
-          </FormLabel>
+          </WidgetPageFormLabel>
           <Spacer />
           <Switch id="dark-mode"
             mt={1}
@@ -100,7 +114,11 @@ const WidgetPageLeft: React.FC = () => {
           </InputRightAddon>
         </InputGroup>
       </WidgetFormGroup>
+
       <Divider my={5} />
+
+      <Heading as="h3" size="md" mb={2}>Customize</Heading>
+
       <WidgetFormGroup title="Edit Widgets">
         {
           widgetVariables.length !== 0
