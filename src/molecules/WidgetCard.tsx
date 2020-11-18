@@ -7,7 +7,6 @@ import { Widget } from '../interfaces/widget.interface';
 
 type WidgetCardProps = {
   widget: Widget;
-  isCommunity?: boolean;
   onClone: (widget: Widget) => void
 }
 
@@ -26,6 +25,7 @@ const WidgetCard: React.FC<WidgetCardProps> = ({
 
   return (
     <Flex
+      cursor="pointer"
       borderRadius="lg"
       boxShadow="lg"
       flexDirection="column"
@@ -58,6 +58,7 @@ const WidgetCard: React.FC<WidgetCardProps> = ({
           mt={2}
           fontSize="sm"
           onClick={() => onClick()}
+          isTruncated
         >
           {description}
         </Text>
@@ -66,7 +67,7 @@ const WidgetCard: React.FC<WidgetCardProps> = ({
           justify="space-between"
         >
           <Flex>
-            {widget?.isFeatured ? <Tag colorScheme="teal">Featured</Tag> : <Box />}
+            {widget?.isFeatured && widget?.isPublished ? <Tag colorScheme="teal">Featured</Tag> : <Box />}
             {/* <Flex alignItems="center"> */}
             {/*  <Icon as={AiOutlineLike} color="gray.300" /> */}
             {/*  <Text color="gray.300" ml={1}>12</Text> */}

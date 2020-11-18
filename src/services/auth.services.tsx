@@ -8,14 +8,14 @@ const createUserInDb = (
   id: string,
   email: string,
   displayName?: string | null, photoUrl?: string | null,
-): Promise<any> => new Promise((resolve) => {
+): Promise<User> => new Promise((resolve) => {
   userCollection
     .doc(id)
     .set({
       email,
       displayName,
       photoUrl,
-      createdAt: Date.now().toLocaleString(),
+      createdAt: new Date().toLocaleDateString(),
     }).then(() => {
       db.collection('users')
         .doc(id)
@@ -24,7 +24,7 @@ const createUserInDb = (
     });
 });
 
-const authenticateUser = (): Promise<any> => new Promise(((resolve, reject) => {
+const authenticateUser = (): Promise<User> => new Promise(((resolve, reject) => {
   auth.signInWithPopup(googleAuthProvider).then((result) => {
     if (result.user) {
       const userFromAuth: firebase.User = result.user;

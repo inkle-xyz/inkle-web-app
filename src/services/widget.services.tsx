@@ -1,3 +1,4 @@
+import firebase from 'firebase';
 import { Widget } from '../interfaces/widget.interface';
 import { auth, db } from '../firebase.config';
 import { User } from '../interfaces/user.interface';
@@ -40,13 +41,14 @@ export const updateWidgetInformation = (
   data: Partial<Widget>,
 ): Promise<void > => widgetsCollection.doc(widgetId).update(data);
 
-export const getCommunityWidgets = (
+export const getFeaturedWidgets = (
   limit: number,
   startingName?: string,
 
 ): Promise<Widget[]> => new Promise((resolve) => {
   const startingQuery = widgetsCollection
     .where('isPublished', '==', true)
+    .where('isFeatured', '==', true)
     .orderBy('name')
     .limit(limit);
 
@@ -82,11 +84,12 @@ export const cloneWidget = (
   authorName: currentUser.displayName,
   likes: 0,
   isPublished: false,
+  isFeatured: false,
 });
 
-export const deleteWidget = (widgetId: string) => widgetsCollection.doc(widgetId).delete();
+export const deleteWidget = (widgetId: string): Promise<void> => widgetsCollection.doc(widgetId).delete();
 
-export const createNewWidget = (currentUser: User) => {
+export const createNewWidget = (currentUser: User): Promise<firebase.firestore.DocumentReference> => {
   const newWidget: Partial<Widget> = {
     isFeatured: false,
     variables: [],

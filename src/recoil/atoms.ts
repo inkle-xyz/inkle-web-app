@@ -26,3 +26,8 @@ export const userWidgetCodeState = atom<string>({
   key: 'userWidgetCode',
   default: '',
 });
+
+export const isWidgetErrorsState = atom<boolean>({
+  key: 'isWidgetErrors',
+  default: false,
+});

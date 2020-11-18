@@ -4,7 +4,7 @@ import {
 } from '@chakra-ui/react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { Widget } from '../interfaces/widget.interface';
-import { cloneWidget, getCommunityWidgets, getUsersWidgets } from '../services/widget.services';
+import { cloneWidget, getFeaturedWidgets, getUsersWidgets } from '../services/widget.services';
 import WidgetCard from '../molecules/WidgetCard';
 import SearchSortBar from './SearchSortBar';
 import { userState, usersWidgetsState } from '../recoil/atoms';
@@ -31,7 +31,7 @@ const CommunityWidgets: React.FC = () => {
   const numberOfWidgetsToFetch = 8;
 
   useEffect(() => {
-    getCommunityWidgets(numberOfWidgetsToFetch, state.widgets[state.widgets.length]?.name).then((widgets) => {
+    getFeaturedWidgets(numberOfWidgetsToFetch, state.widgets[state.widgets.length]?.name).then((widgets) => {
       setState((s) => ({
         ...s,
         isLoading: false,
@@ -58,7 +58,7 @@ const CommunityWidgets: React.FC = () => {
   return (
     <Box my="4rem">
       <SearchSortBar
-        title="Community 🌱"
+        title="Featured Community Widgets 🌱"
         options={['By Name']}
       />
       { state.isLoading
@@ -77,9 +77,9 @@ const CommunityWidgets: React.FC = () => {
           <SimpleGrid columns={{ sm: 1, md: 3 }} spacing={10} mt={10}>
             {
             state.widgets
+              .filter((widget) => widget.author !== user?.id)
               .map((widget) => (
                 <WidgetCard
-                  isCommunity
                   onClone={onWidgetClone}
                   key={widget.id}
                   widget={widget}

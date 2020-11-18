@@ -10,7 +10,7 @@ interface WidgetDefaultValueBoxProps {
   widgetVariable: WidgetVariable;
 }
 
-const WidgetDefaultValueBox: React.FC<WidgetDefaultValueBoxProps> = ({
+const WidgetVariableValueInput: React.FC<WidgetDefaultValueBoxProps> = ({
   widgetVariable: {
     name, description, id, value,
   },
@@ -26,6 +26,7 @@ const WidgetDefaultValueBox: React.FC<WidgetDefaultValueBoxProps> = ({
         {name}
         {' '}
         -
+        {' '}
         {description}
       </WidgetPageFormLabel>
       <Input
@@ -40,4 +41,4 @@ const WidgetDefaultValueBox: React.FC<WidgetDefaultValueBoxProps> = ({
   );
 };
 
-export default WidgetDefaultValueBox;
+export default WidgetVariableValueInput;

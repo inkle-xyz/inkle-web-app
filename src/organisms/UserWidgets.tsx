@@ -50,7 +50,7 @@ const UserWidgets: React.FC = () => {
     if (!usersWidgets) {
       return;
     }
-    const filteredWidgets = usersWidgets.filter((s) => s.name.includes(searchTerm));
+    const filteredWidgets = usersWidgets.filter((s) => s.name.toLowerCase().includes(searchTerm.toLowerCase()));
     if (searchTerm !== '') {
       setState({
         ...state,
@@ -106,7 +106,7 @@ const UserWidgets: React.FC = () => {
           </Center>
         )
         : (
-          <SimpleGrid columns={{ sm: 1, md: 3 }} spacing={10} mt={10}>
+          <SimpleGrid columns={{ sm: 1, md: 3 }} spacing={10} mt={10} h="175px">
             {
             getWidgetsToRender()
               .map((widget) => (
