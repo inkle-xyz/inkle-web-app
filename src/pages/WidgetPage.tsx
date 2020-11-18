@@ -72,7 +72,9 @@ const WidgetPage: React.FC<WidgetPageProps> = ({ id }) => {
           <Center h="100%">
             <Box>
               <Alert status="info" mb={4} textAlign="center" variant="solid" w="450px" mx="auto">
-                💡 Drag the border to preview this widget in different sizes
+                <span role="img" aria-label="Lightbulb Emoji">💡</span>
+                {' '}
+                Drag the border to preview this widget in different sizes
               </Alert>
               <Resizable
                 style={{

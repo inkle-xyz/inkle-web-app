@@ -231,7 +231,8 @@ const WidgetPageLeft: React.FC = () => {
         }));
       }
     }
-  }, [setState, originalSelectedWidget, selectedWidget, toast, state.toastId, editedCode]);
+  }, [setState, originalSelectedWidget, selectedWidget, toast, state.toastId, editedCode,
+    currentUser, setCurrentUser, state.hasInitialized]);
 
   return (
     <Box my="4rem">

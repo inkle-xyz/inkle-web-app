@@ -12,6 +12,7 @@ import {
 import React, { useEffect, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
+import { AiOutlineTwitter } from 'react-icons/all';
 import LogoIcon from '../assets/logo-icon.svg';
 import { auth } from '../firebase.config';
 import { getCurrentUser } from '../services/auth.services';
@@ -64,7 +65,19 @@ const DashboardNavbar: React.FC = () => {
             </MenuItem>
           </MenuList>
         </Menu>
-        <Button variant="outline" size="sm">Get Updates</Button>
+        <a href="https://twitter.com/inkle_xyz" target="_blank" rel="noreferrer">
+          <Button
+            variant="outline"
+            size="md"
+            border="2px solid"
+            borderColor="#00ACED"
+            color="#00ACED"
+            leftIcon={<AiOutlineTwitter />}
+          >
+            Get Updates
+          </Button>
+        </a>
+
       </Flex>
 
       <Modal isOpen={isOpen} onClose={onClose} size="xl">

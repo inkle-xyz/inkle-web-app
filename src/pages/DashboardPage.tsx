@@ -7,7 +7,6 @@ const DashboardPage: React.FC = () => (
   <Box>
     <UserWidgets />
     <CommunityWidgets />
-
   </Box>
 );
 
