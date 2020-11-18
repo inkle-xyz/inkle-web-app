@@ -133,7 +133,7 @@ const WidgetPageLeft: React.FC = () => {
         setToastId('');
       }
     }
-  });
+  }, [setIsUnsavedChanges, originalSelectedWidget, selectedWidget, toast, toastId]);
 
   return (
     selectedWidget

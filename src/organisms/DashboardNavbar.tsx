@@ -33,6 +33,7 @@ const DashboardNavbar: React.FC = () => {
         user,
       });
     });
+  // eslint-disable-next-line
   }, []);
 
   return (

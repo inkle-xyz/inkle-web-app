@@ -1,8 +1,7 @@
 import {
-  Box, Button, Flex, Heading, Icon, Image, Text,
+  Box, Button, Flex, Heading, Image, Tag, Text,
 } from '@chakra-ui/react';
 import React from 'react';
-import { AiOutlineLike, IoIosStats } from 'react-icons/all';
 import { useHistory } from 'react-router-dom';
 import NoWidgetImage from './NoWidgetImage';
 import { Widget } from '../interfaces/widget.interface';
@@ -70,14 +69,15 @@ const WidgetCard: React.FC<WidgetCardProps> = ({
           justify="space-between"
         >
           <Flex>
-            <Flex alignItems="center">
-              <Icon as={AiOutlineLike} color="gray.300" />
-              <Text color="gray.300" ml={1}>12</Text>
-            </Flex>
-            <Flex alignItems="center" ml={4}>
-              <Icon as={IoIosStats} color="gray.300" />
-              <Text color="gray.300" ml={1}>12</Text>
-            </Flex>
+            {widget?.isFeatured ? <Tag colorScheme="teal">Featured</Tag> : <Box />}
+            {/* <Flex alignItems="center"> */}
+            {/*  <Icon as={AiOutlineLike} color="gray.300" /> */}
+            {/*  <Text color="gray.300" ml={1}>12</Text> */}
+            {/* </Flex> */}
+            {/* <Flex alignItems="center" ml={4}> */}
+            {/*  <Icon as={IoIosStats} color="gray.300" /> */}
+            {/*  <Text color="gray.300" ml={1}>12</Text> */}
+            {/* </Flex> */}
           </Flex>
           {
             isCommunity && onClone

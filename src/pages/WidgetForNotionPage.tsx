@@ -17,6 +17,7 @@ const WidgetForNotionPage: React.FC<Props> = ({ id }) => {
 
   useEffect(() => {
     getWidget(id).then((w) => setWidget(w));
+    // eslint-disable-next-line
   }, []);
 
   return (

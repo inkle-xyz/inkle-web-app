@@ -17,4 +17,5 @@ export interface Widget {
   code: string;
   likes?: number;
   image?: string;
+  isFeatured?: boolean
 }

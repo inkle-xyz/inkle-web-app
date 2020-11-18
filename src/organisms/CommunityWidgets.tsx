@@ -32,14 +32,15 @@ const CommunityWidgets: React.FC = () => {
 
   useEffect(() => {
     getCommunityWidgets(numberOfWidgetsToFetch, state.widgets[state.widgets.length]?.name).then((widgets) => {
-      setState({
-        ...state,
+      setState((s) => ({
+        ...s,
         isLoading: false,
         isInitialized: true,
-        startAt: state.startAt + numberOfWidgetsToFetch,
+        startAt: s.startAt + numberOfWidgetsToFetch,
         widgets,
-      });
+      }));
     });
+    // eslint-disable-next-line
   }, []);
 
   const searchHandler = (value: string) => console.log(value);

@@ -27,7 +27,8 @@ const ProtectedRoute: React.FC<Props> = ({ ...rest }) => {
     } else {
       history.push('/auth');
     }
-  }), [setAuthState]);
+    // eslint-disable-next-line
+  }), []);
   return (
     authState.initializing ? <LoadingPage height="100vh" /> : (
       <Route

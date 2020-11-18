@@ -37,7 +37,6 @@
     "react/prop-types": 0,
     "import/no-extraneous-dependencies": 0,
     "react/no-array-index-key": 0,
-    "react-hooks/exhaustive-deps": 0,
     "max-len": [1, 120],
     "import/extensions": [
       "error",

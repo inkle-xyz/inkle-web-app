@@ -48,6 +48,7 @@ const WidgetPage: React.FC<WidgetPageProps> = ({ id }) => {
         hasInitialized: true,
       });
     }
+    // eslint-disable-next-line
   }, []);
 
   if (state.loading || !selectedWidget) {
