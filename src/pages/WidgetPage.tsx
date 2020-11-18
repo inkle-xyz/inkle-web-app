@@ -1,13 +1,14 @@
 import {
   Box, Center, Image, SimpleGrid,
 } from '@chakra-ui/react';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { LivePreview, LiveProvider } from 'react-live';
 import dracula from 'prism-react-renderer/themes/dracula';
 import { useRecoilValue } from 'recoil';
 import LogoIcon from '../assets/logo-icon.svg';
 import WidgetPageLeft from '../organisms/WidgetPageLeft';
 import { widgetVariableState } from '../recoil/atoms';
+import LoadingPage from './LoadingPage';
 
 const prebuiltCode = `
 class Counter extends React.Component {
@@ -42,8 +43,14 @@ type WidgetPageProps = {
   id: string;
 }
 
+type WidgetPageState = {
+
+}
+
 const WidgetPage: React.FC<WidgetPageProps> = ({ id }) => {
   const widgetVariables = useRecoilValue(widgetVariableState);
+
+  const [widgetPageState, setWidgetPageState] = useState();
 
   const passedProps: Record<string, any> = {};
 

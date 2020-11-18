@@ -1,5 +1,5 @@
 import React from 'react';
-import { Spinner, Box } from '@chakra-ui/react';
+import { Spinner, Box, Center } from '@chakra-ui/react';
 
 type LoadingPageProps = {
   width?: string;
@@ -11,13 +11,15 @@ const LoadingPage: React.FC<LoadingPageProps> = ({
   height = '100%',
 }) => (
   <Box w={width} h={height}>
-    <Spinner
-      thickness="4px"
-      speed="0.65s"
-      emptyColor="gray.200"
-      color="blue.500"
-      size="xl"
-    />
+    <Center h={height}>
+      <Spinner
+        thickness="4px"
+        speed="0.65s"
+        emptyColor="gray.200"
+        color="yellow.500"
+        size="xl"
+      />
+    </Center>
   </Box>
 );
 

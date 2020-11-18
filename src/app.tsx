@@ -1,23 +1,24 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import HomePage from './pages/HomePage';
+import DashboardPage from './pages/DashboardPage';
 import AuthPage from './pages/AuthPage';
-import AppContainer from './containers/AppContainer';
+import DashboardContainer from './containers/DashboardContainer';
 import WidgetPage from './pages/WidgetPage';
+import ProtectedRoute from './routes/protected-route';
 
 const App: React.FC = () => (
   <Switch>
     <Redirect from="/widget" to="/" exact />
-    <Route
+    <ProtectedRoute
       path="/widget/:id"
       render={
       (props) => <WidgetPage id={props.match.params.id} />
     }
     />
     <Route path="/auth" component={AuthPage} exact />
-    <AppContainer>
-      <Route path="/" component={HomePage} exact />
-    </AppContainer>
+    <DashboardContainer>
+      <ProtectedRoute path="/" component={DashboardPage} exact />
+    </DashboardContainer>
   </Switch>
 );
 

@@ -15,6 +15,7 @@ export interface Widget {
   author: string; // Author Name
   authorName: string; // Author Email
   isPublished: boolean;
+  code: string;
   likes?: number;
   image?: string;
 }

@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { Route, useHistory } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router';
 import { auth } from '../firebase.config';
 import LoadingPage from '../pages/LoadingPage';
 
 type Props = {
-  exact: boolean,
+  exact?: boolean,
   path: string,
-  component: React.FC
+  render?: (props: RouteComponentProps<any>) => React.ReactNode;
+  component?: React.FC
 }
 
-const ProtectedRoute: React.FC<Props> = ({ component: Component, ...rest }) => {
+const ProtectedRoute: React.FC<Props> = ({ ...rest }) => {
   const [authState, setAuthState] = useState({
     isAuthenticated: true,
     initializing: true,
@@ -27,12 +29,9 @@ const ProtectedRoute: React.FC<Props> = ({ component: Component, ...rest }) => {
     }
   }), [setAuthState]);
   return (
-    authState.initializing ? <LoadingPage /> : (
+    authState.initializing ? <LoadingPage height="100vh" /> : (
       <Route
         {...rest}
-        component={() => (
-          <Component />
-        )}
       />
     )
   );

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Box, Center, SimpleGrid, Spinner,
+  Box, Center, SimpleGrid, Spinner, useToast,
 } from '@chakra-ui/react';
 import SearchSortBar from './SearchSortBar';
 import WidgetCard from '../molecules/WidgetCard';
@@ -25,6 +25,8 @@ const UserWidgets = () => {
     hasLoaded: false,
   });
 
+  const toast = useToast();
+
   useEffect(() => {
     if (!state.hasLoaded) {
       getUsersWidgets().then((widgets) => setState({
@@ -33,6 +35,9 @@ const UserWidgets = () => {
         loading: false,
         isFiltered: false,
         hasLoaded: true,
+      })).catch((error) => toast({
+        status: 'error',
+        title: error.toString(),
       }));
     }
   });

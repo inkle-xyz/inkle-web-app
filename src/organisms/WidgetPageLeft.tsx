@@ -14,8 +14,9 @@ import {
   Button,
   IconButton,
   Heading,
+  useToast,
 } from '@chakra-ui/react';
-import React from 'react';
+import React, { useState } from 'react';
 import { FiCopy } from 'react-icons/all';
 import { LiveEditor, LiveError } from 'react-live';
 import { useRecoilState } from 'recoil';
@@ -27,6 +28,8 @@ import { widgetSettingsState, widgetVariableState } from '../recoil/atoms';
 import WidgetVariableBox from '../molecules/WidgetVariableBox';
 import WidgetDefaultValueBox from '../molecules/WidgetDefaultValueBox';
 import WidgetPageFormLabel from '../atoms/WidgetPageFormLabel';
+import { Widget } from '../interfaces/widget.interface';
+import { saveWidget } from '../services/widget.services';
 
 const StyledError = styled(LiveError)`
   display: block;
@@ -42,7 +45,9 @@ const StyledError = styled(LiveError)`
 const WidgetPageLeft: React.FC = () => {
   const [widgetVariables, setWidgetVariables] = useRecoilState(widgetVariableState);
   const [widgetSettings, setWidgetSettings] = useRecoilState(widgetSettingsState);
+  const [widgetCode, setWidgetCode] = useState('');
   const history = useHistory();
+  const toast = useToast();
 
   const createNewWidgetVariable = () => {
     const newWidgetVariables = JSON.parse(JSON.stringify(widgetVariables));
@@ -55,6 +60,28 @@ const WidgetPageLeft: React.FC = () => {
     setWidgetVariables(newWidgetVariables);
   };
 
+  const onSaveClick = () => {
+    const widgetToSave: Partial<Widget> = {
+      variables: widgetVariables,
+      code: widgetCode,
+      description: widgetSettings.description,
+      isDarkMode: widgetSettings.isDarkMode,
+      name: widgetSettings.name,
+    };
+    try {
+      saveWidget(widgetSettings.id, widgetToSave).then(() => toast({
+        status: 'success',
+        title: 'Saved Widget!',
+      }));
+    } catch (e) {
+      toast({
+        status: 'error',
+        title: 'Error saving widget!',
+        description: e.toString(),
+      });
+    }
+  };
+
   return (
     <Box mt="4rem">
       <Flex alignItems="center">
@@ -65,6 +92,12 @@ const WidgetPageLeft: React.FC = () => {
           icon={<ArrowBackIcon w={8} h={8} />}
         />
         <WidgetTitleEditable />
+        <Spacer />
+        <Button colorScheme="green"
+          onClick={() => onSaveClick()}
+        >
+          Update
+        </Button>
       </Flex>
 
       <Box>
@@ -148,9 +181,7 @@ const WidgetPageLeft: React.FC = () => {
         </Text>
         {/* Really nasty workaround down here I wish we didn't need
         // @ts-ignore */}
-        <LiveEditor onChangeCapture={() => {
-          // console.log(e.currentTarget?.firstChild.value)
-        }}
+        <LiveEditor onChangeCapture={(e) => setWidgetCode(e.currentTarget?.firstChild.value)}
           style={{ borderRadius: '4px' }}
         />
         <StyledError />
