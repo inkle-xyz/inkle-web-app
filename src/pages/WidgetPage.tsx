@@ -1,5 +1,4 @@
 import {
-  AlertIcon,
   Alert,
   Box, Center, Image, SimpleGrid,
 } from '@chakra-ui/react';
@@ -97,9 +96,7 @@ const WidgetPage: React.FC<WidgetPageProps> = ({ id }) => {
                       ? 'white' : 'gray.800'
                   }
                 >
-                  <Center h="100%">
-                    <LivePreview />
-                  </Center>
+                  <LivePreview />
                 </Box>
               </Resizable>
             </Box>

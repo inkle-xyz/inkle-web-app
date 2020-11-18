@@ -1,4 +1,4 @@
-import { Box, Center } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import {
   LiveProvider,
@@ -23,13 +23,22 @@ const WidgetForNotionPage: React.FC<Props> = ({ id }) => {
   return (
     widget
       ? (
-        <LiveProvider code={widget.code} scope={getScopeFromWidget(widget)}>
-          <Box bgColor="white" w="365px" h="365px">
-            <Center h="100%">
-              <LivePreview />
-            </Center>
-          </Box>
-        </LiveProvider>
+        <Box
+          bgColor={
+            widget.isDarkMode
+              ? '#2F3437' : 'white'
+          }
+          color={
+            widget.isDarkMode
+              ? 'white' : 'gray.800'
+          }
+          h="100vh"
+          w="100vw"
+        >
+          <LiveProvider code={widget.code} scope={getScopeFromWidget(widget)}>
+            <LivePreview />
+          </LiveProvider>
+        </Box>
 
       ) : <Box />
   );
