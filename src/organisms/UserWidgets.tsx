@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import {
   Box, Center, SimpleGrid, Spinner, useToast,
 } from '@chakra-ui/react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import SearchSortBar from './SearchSortBar';
 import WidgetCard from '../molecules/WidgetCard';
 import EmptyWidgetCard from '../molecules/EmptyWidgetCard';
-import { getUsersWidgets } from '../services/widget.services';
+import { cloneWidget, getUsersWidgets } from '../services/widget.services';
 import { Widget } from '../interfaces/widget.interface';
-import { usersWidgetsState } from '../recoil/atoms';
+import { userState, usersWidgetsState } from '../recoil/atoms';
 
 type UserWidgetsState = {
   filteredUserWidgets: Widget[];
@@ -25,6 +25,7 @@ const UserWidgets: React.FC = () => {
     hasLoaded: false,
   });
   const [usersWidgets, setUsersWidgets] = useRecoilState(usersWidgetsState);
+  const user = useRecoilValue(userState);
 
   const toast = useToast();
 
@@ -64,6 +65,18 @@ const UserWidgets: React.FC = () => {
     }
   };
 
+  const onWidgetClone = (widget: Widget) => {
+    if (user) {
+      cloneWidget(user, widget).then(() => getUsersWidgets().then((widgets) => setUsersWidgets(widgets)));
+    } else {
+      toast({
+        status: 'error',
+        title: 'Error cloning widget',
+        description: 'Please refresh page',
+      });
+    }
+  };
+
   const getWidgetsToRender = (): Widget[] => (state.isFiltered
     ? state.filteredUserWidgets : usersWidgets ?? []);
 
@@ -97,6 +110,7 @@ const UserWidgets: React.FC = () => {
             getWidgetsToRender()
               .map((widget) => (
                 <WidgetCard
+                  onClone={onWidgetClone}
                   widget={widget}
                   key={widget.id}
                 />

@@ -9,7 +9,7 @@ const AuthPage: React.FC = () => {
 
   const onClick = () => {
     authenticateUser().then(() => {
-      history.push('/');
+      history.push('/dashboard');
     });
   };
 

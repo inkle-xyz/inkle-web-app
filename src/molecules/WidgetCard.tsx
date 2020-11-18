@@ -9,12 +9,11 @@ import { Widget } from '../interfaces/widget.interface';
 type WidgetCardProps = {
   widget: Widget;
   isCommunity?: boolean;
-  onClone?: (widget: Widget) => void
+  onClone: (widget: Widget) => void
 }
 
 const WidgetCard: React.FC<WidgetCardProps> = ({
   widget,
-  isCommunity,
   onClone,
 }) => {
   const history = useHistory();
@@ -80,10 +79,10 @@ const WidgetCard: React.FC<WidgetCardProps> = ({
             {/* </Flex> */}
           </Flex>
           {
-            isCommunity && onClone
+            onClone
               ? (
-                <Button size="sm" colorScheme="yellow" color="white" onClick={() => onClone(widget)}>
-                  Clone Widget
+                <Button size="sm" onClick={() => onClone(widget)}>
+                  Copy Widget
                 </Button>
               ) : <></>
           }

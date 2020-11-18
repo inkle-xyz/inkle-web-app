@@ -8,7 +8,7 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 import { useHistory } from 'react-router-dom';
 import LogoIcon from '../assets/logo-icon.svg';
 import WidgetPageLeft from '../organisms/WidgetPageLeft';
-import { originalSelectedWidgetState, selectedWidgetState } from '../recoil/atoms';
+import { originalSelectedWidgetState, selectedWidgetState, userWidgetCodeState } from '../recoil/atoms';
 import LoadingPage from './LoadingPage';
 import { getWidget } from '../services/widget.services';
 import { getScopeFromWidget } from '../utils/widget.utils';
@@ -32,12 +32,14 @@ const WidgetPage: React.FC<WidgetPageProps> = ({ id }) => {
 
   const [selectedWidget, setSelectedWidget] = useRecoilState(selectedWidgetState);
   const setOriginalSelectedWidget = useSetRecoilState(originalSelectedWidgetState);
+  const [editedCode, setEditedCode] = useRecoilState(userWidgetCodeState);
 
   useEffect(() => {
     if (!state.hasInitialized) {
       getWidget(id).then((widget) => {
         setSelectedWidget(widget);
         setOriginalSelectedWidget(widget);
+        setEditedCode(widget.code);
       }).catch((e: Error) => {
         if (e.message === 'Widget not found') {
           history.goBack();
@@ -56,7 +58,7 @@ const WidgetPage: React.FC<WidgetPageProps> = ({ id }) => {
   }
 
   return (
-    <LiveProvider theme={dracula} code={selectedWidget.code} scope={getScopeFromWidget(selectedWidget)}>
+    <LiveProvider theme={dracula} code={editedCode} scope={getScopeFromWidget(selectedWidget)}>
       <SimpleGrid columns={2} h="100vh">
         <Box w="100%" overflow="scroll">
           <Box width="500px" mx="auto">

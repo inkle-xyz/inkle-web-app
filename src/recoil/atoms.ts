@@ -21,3 +21,8 @@ export const usersWidgetsState = atom<Widget[] | null>({
   key: 'usersWidgets',
   default: null,
 });
+
+export const userWidgetCodeState = atom<string>({
+  key: 'userWidgetCode',
+  default: '',
+});

@@ -16,16 +16,29 @@ export const updateWidgetVariableField = (
       newWidgetVariables[i][field] = newValue;
     }
   }
-  setFunction({ ...widget, variables: newWidgetVariables });
+  setFunction((w) => {
+    if (w) {
+      return {
+        ...w,
+        variables: newWidgetVariables,
+      };
+    }
+    return null;
+  });
 };
 
 export const deleteWidgetVariable = (
   setFunction: SetterOrUpdater<Widget | null>,
 ) => (id: string, widget: Widget): void => {
   const newWidgetVariables: WidgetVariable[] = JSON.parse(JSON.stringify(widget.variables));
-  setFunction({
-    ...widget,
-    variables: newWidgetVariables.filter((variable) => variable.id !== id),
+  setFunction((w) => {
+    if (w) {
+      return {
+        ...w,
+        variables: newWidgetVariables.filter((variable) => variable.id !== id),
+      };
+    }
+    return null;
   });
 };
 
