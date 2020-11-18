@@ -1,4 +1,3 @@
-import exp from 'constants';
 import { Widget } from '../interfaces/widget.interface';
 import { auth, db } from '../firebase.config';
 
@@ -21,7 +20,12 @@ export const getUsersWidgets = (): Promise<Widget[]> => new Promise(((resolve, r
 }));
 
 export const getWidget = (widgetId: string): Promise<Widget> => new Promise<Widget>(((resolve) => {
-  widgetsCollection.doc(widgetId).get().then((querySnapshot) => resolve(querySnapshot.data() as Widget));
+  widgetsCollection
+    .doc(widgetId)
+    .get().then((querySnapshot) => resolve({
+      ...querySnapshot.data(),
+      id: querySnapshot.id,
+    } as Widget));
 }));
 
 export const updateWidgetInformation = (
@@ -56,4 +60,7 @@ export const getCommunityWidgets = (
   });
 });
 
-export const saveWidget = (widgetId: string, widget: Partial<Widget>): Promise<void> => widgetsCollection.doc(widgetId).update(widget);
+export const saveWidget = (
+  widgetId: string,
+  widget: Partial<Widget>,
+): Promise<void> => widgetsCollection.doc(widgetId).update(widget);

@@ -7,37 +7,43 @@ import { getCommunityWidgets } from '../services/widget.services';
 import WidgetCard from '../molecules/WidgetCard';
 import SearchSortBar from './SearchSortBar';
 
+type CommunityWidgetsState = {
+  widgets: Widget[];
+  startAt: number;
+  isInitialized: boolean;
+  isLoading: boolean;
+  isFetchingData: boolean;
+}
+
 const CommunityWidgets: React.FC = () => {
-  const [widgets, setWidgets] = useState<Widget[]>([]);
-  const [isFetching, setIsFetching] = useState<boolean>(true);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [startAt, setStartAt] = useState(0);
+  const [state, setState] = useState<CommunityWidgetsState>({
+    widgets: [],
+    startAt: 1,
+    isInitialized: false,
+    isLoading: true,
+    isFetchingData: false,
+  });
+
   const toast = useToast();
   const numberOfWidgetsToFetch = 8;
-
-  const handleScroll = (): void => {
-    if (
-      Math.ceil(
-        window.innerHeight + document.documentElement.scrollTop,
-      ) !== document.documentElement.offsetHeight
-      || isFetching
-    ) return;
-    console.log('Scrolling');
-    setIsFetching(true);
-  };
 
   const getWidgets = async () => {
     try {
       console.log('Getting Widgets');
-      console.log('startAt', startAt);
+      console.log('startAt', state.startAt);
       console.log('numberOfWidgetsToFetch', numberOfWidgetsToFetch);
-      setIsFetching(true);
-      const oldWidgets = JSON.parse(JSON.stringify(widgets));
-      const newWidgets = await getCommunityWidgets(numberOfWidgetsToFetch, widgets[widgets.length]?.name);
-      setStartAt(startAt + numberOfWidgetsToFetch);
-      setWidgets(oldWidgets + newWidgets);
-      setIsFetching(false);
-      setIsLoading(false);
+      console.log('Existing widgets', state.widgets);
+      const oldWidgets: [] = JSON.parse(JSON.stringify(state.widgets));
+      const newWidgets = await getCommunityWidgets(numberOfWidgetsToFetch, state.widgets[state.widgets.length]?.name);
+      console.log(oldWidgets);
+      console.log(newWidgets);
+      console.log();
+      setState({
+        ...state,
+        isFetchingData: false,
+        startAt: state.startAt + numberOfWidgetsToFetch,
+        widgets: newWidgets,
+      });
     } catch (e) {
       toast({
         status: 'error',
@@ -47,15 +53,32 @@ const CommunityWidgets: React.FC = () => {
     }
   };
 
-  useEffect(() => {
+  const handleScroll = (): void => {
+    if (
+      Math.ceil(
+        window.innerHeight + document.documentElement.scrollTop,
+      ) !== document.documentElement.offsetHeight
+      || state.isFetchingData
+    ) return;
+    console.log('Scrolling');
+    setState({
+      ...state,
+      isFetchingData: true,
+    });
     getWidgets();
-    window.addEventListener('scroll', handleScroll);
-  }, []);
+  };
 
   useEffect(() => {
-    if (!isFetching) return;
-    getWidgets();
-  }, [isFetching]);
+    getCommunityWidgets(numberOfWidgetsToFetch, state.widgets[state.widgets.length]?.name).then((widgets) => {
+      setState({
+        ...state,
+        isLoading: false,
+        isInitialized: true,
+        startAt: state.startAt + numberOfWidgetsToFetch,
+        widgets,
+      });
+    });
+  }, []);
 
   const searchHandler = (value: string) => console.log(value);
   const sortHandler = (value: string) => console.log(value);
@@ -68,7 +91,7 @@ const CommunityWidgets: React.FC = () => {
         sortHandler={sortHandler}
         options={['By Name']}
       />
-      { isLoading
+      { state.isLoading
         ? (
           <Center h="450px">
             <Spinner
@@ -83,18 +106,15 @@ const CommunityWidgets: React.FC = () => {
         : (
           <SimpleGrid columns={{ sm: 1, md: 3 }} spacing={10} mt={10}>
             {
-            widgets
+            state.widgets
               .map((widget) => (
                 <WidgetCard
-                  name={widget.name}
-                  description={widget.description}
-                  author={widget.author}
-                  id={widget.id}
-                  image={widget.image}
+                  key={widget.id}
+                  widget={widget}
                 />
               ))
           }
-            {isFetching && (
+            {state.isFetchingData && (
             <Spinner
               thickness="4px"
               speed="0.65s"

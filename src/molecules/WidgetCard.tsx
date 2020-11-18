@@ -5,19 +5,23 @@ import React from 'react';
 import { AiOutlineLike, IoIosStats } from 'react-icons/all';
 import { useHistory } from 'react-router-dom';
 import NoWidgetImage from './NoWidgetImage';
+import { Widget } from '../interfaces/widget.interface';
 
 type WidgetCardProps = {
-  name: string;
-  description: string;
-  author: string;
-  id: string;
-  image: string | undefined;
+  widget: Widget;
 }
 
 const WidgetCard: React.FC<WidgetCardProps> = ({
-  name, description, author, image, id,
+  widget,
 }) => {
   const history = useHistory();
+  const {
+    name, description, author, image, id,
+  } = widget;
+
+  const onClick = () => {
+    history.push(`/widget/${id}`);
+  };
 
   return (
     <Flex
@@ -26,7 +30,7 @@ const WidgetCard: React.FC<WidgetCardProps> = ({
       h="450px"
       flexDirection="column"
       overflow="hidden"
-      onClick={() => history.push(`/widget/${id}`)}
+      onClick={() => onClick()}
     >
       <Box flexGrow={1}>
         {

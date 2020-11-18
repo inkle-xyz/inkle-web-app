@@ -8,7 +8,7 @@ type LoadingPageProps = {
 
 const LoadingPage: React.FC<LoadingPageProps> = ({
   width = '100%',
-  height = '100%',
+  height = '100vh',
 }) => (
   <Box w={width} h={height}>
     <Center h={height}>

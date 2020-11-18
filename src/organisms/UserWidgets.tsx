@@ -16,7 +16,7 @@ type UserWidgetsState = {
   hasLoaded: boolean;
 }
 
-const UserWidgets = () => {
+const UserWidgets: React.FC = () => {
   const [state, setState] = useState<UserWidgetsState>({
     usersWidgets: [],
     filteredUserWidgets: [],
@@ -62,7 +62,7 @@ const UserWidgets = () => {
     ? state.filteredUserWidgets : state.usersWidgets);
 
   const sortHandler = (searchTerm: string): void => {
-    console.log(searchTerm);
+    // console.log(searchTerm);
   };
 
   return (
@@ -91,11 +91,7 @@ const UserWidgets = () => {
             getWidgetsToRender()
               .map((widget) => (
                 <WidgetCard
-                  name={widget.name}
-                  description={widget.description}
-                  author={widget.authorName}
-                  image={widget.image}
-                  id={widget.id}
+                  widget={widget}
                   key={widget.id}
                 />
               ))

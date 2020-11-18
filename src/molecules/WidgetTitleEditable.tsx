@@ -1,13 +1,13 @@
 import {
-  ButtonGroup, Editable, EditableInput, EditablePreview, Flex, IconButton,
+  ButtonGroup, Editable, EditableInput, EditablePreview, Flex, IconButton, Box,
 } from '@chakra-ui/react';
 import React from 'react';
 import { CheckIcon, CloseIcon, EditIcon } from '@chakra-ui/icons';
 import { useRecoilState } from 'recoil';
-import { widgetSettingsState } from '../recoil/atoms';
+import { selectedWidgetState } from '../recoil/atoms';
 
 const WidgetTitleEditable: React.FC = () => {
-  const [widgetSettings, setWidgetSettings] = useRecoilState(widgetSettingsState);
+  const [selectedWidget, setSelectedWidget] = useRecoilState(selectedWidgetState);
 
   const EditableControls = ({
     isEditing, onSubmit, onCancel, onEdit, ...props
@@ -22,15 +22,19 @@ const WidgetTitleEditable: React.FC = () => {
     </Flex>
   ));
 
+  if (!selectedWidget) {
+    return <Box />;
+  }
+
   return (
     <Editable
-      defaultValue={widgetSettings.name}
+      defaultValue={selectedWidget.name}
       fontSize="3xl"
       fontWeight="bold"
       mb={2}
       isPreviewFocusable={false}
       submitOnBlur={false}
-      onSubmit={(value) => setWidgetSettings({ ...widgetSettings, name: value })}
+      onSubmit={(value) => setSelectedWidget({ ...selectedWidget, name: value })}
     >
       {(props) => (
         <Flex alignItems="center">

@@ -1,5 +1,5 @@
 import {
-  Box, Button, Center, Flex,
+  Box, Button, Center,
 } from '@chakra-ui/react';
 import React from 'react';
 

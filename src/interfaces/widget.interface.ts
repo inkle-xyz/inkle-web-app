@@ -2,7 +2,7 @@ export interface WidgetVariable {
   id: string;
   name: string;
   description: string;
-  defaultValue: string;
+  value: string;
 }
 
 export interface Widget {
@@ -18,19 +18,4 @@ export interface Widget {
   code: string;
   likes?: number;
   image?: string;
-}
-
-export interface WidgetVariableState {
-  id: string;
-  name: string;
-  description: string;
-  defaultValue: string;
-}
-
-export interface WidgetState {
-  id: string
-  name: string;
-  description: string;
-  isDarkMode: boolean;
-  deployedLink: string;
 }

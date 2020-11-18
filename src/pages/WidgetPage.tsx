@@ -4,64 +4,61 @@ import {
 import React, { useEffect, useState } from 'react';
 import { LivePreview, LiveProvider } from 'react-live';
 import dracula from 'prism-react-renderer/themes/dracula';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import LogoIcon from '../assets/logo-icon.svg';
 import WidgetPageLeft from '../organisms/WidgetPageLeft';
-import { widgetVariableState } from '../recoil/atoms';
+import { originalSelectedWidgetState, selectedWidgetState } from '../recoil/atoms';
 import LoadingPage from './LoadingPage';
-
-const prebuiltCode = `
-class Counter extends React.Component {
-  constructor() {
-    super()
-    this.state = { time: new Date().toLocaleTimeString() }
-  }
-
-  componentDidMount() {
-    this.interval = setInterval(() => {
-      this.setState(() => ({ time: new Date().toLocaleTimeString() }))
-    }, 1000)
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.interval)
-  }
-
-  render() {
-    return (
-      <div>
-        <h3 style={{fontWeight: 'bold', fontSize: '24px'}}>
-          {this.state.time}
-        </h3>
-      </div>
-    )
-  }
-}
-`;
+import { getWidget } from '../services/widget.services';
 
 type WidgetPageProps = {
   id: string;
 }
 
 type WidgetPageState = {
-
+  loading: boolean,
+  hasInitialized: boolean,
 }
 
 const WidgetPage: React.FC<WidgetPageProps> = ({ id }) => {
-  const widgetVariables = useRecoilValue(widgetVariableState);
+  const [state, setState] = useState<WidgetPageState>({
+    loading: true,
+    hasInitialized: false,
+  });
 
-  const [widgetPageState, setWidgetPageState] = useState();
+  const [selectedWidget, setSelectedWidget] = useRecoilState(selectedWidgetState);
+  const setOriginalSelectedWidget = useSetRecoilState(originalSelectedWidgetState);
 
-  const passedProps: Record<string, any> = {};
+  const getPassedProps = (): Record<string, any> => {
+    const p: Record<string, any> = {};
+    if (selectedWidget) {
+      const widgetVariables = selectedWidget?.variables;
+      for (let i = 0; i < widgetVariables.length; i += 1) {
+        p[widgetVariables[i].name] = widgetVariables[i].value;
+      }
+    }
+    return p;
+  };
 
   useEffect(() => {
-    for (let i = 0; i < widgetVariables.length; i += 1) {
-      passedProps[widgetVariables[i].name] = widgetVariables[i].defaultValue;
+    if (!state.hasInitialized) {
+      getWidget(id).then((widget) => {
+        setSelectedWidget(widget);
+        setOriginalSelectedWidget(widget);
+      });
+      setState({
+        loading: false,
+        hasInitialized: true,
+      });
     }
   });
 
+  if (state.loading || !selectedWidget) {
+    return <LoadingPage />;
+  }
+
   return (
-    <LiveProvider theme={dracula} code={prebuiltCode} scope={passedProps}>
+    <LiveProvider theme={dracula} code={selectedWidget.code} scope={getPassedProps()}>
       <SimpleGrid columns={2} h="100vh">
         <Box w="100%" overflow="scroll">
           <Box maxWidth="500px" mx="auto">
@@ -74,13 +71,6 @@ const WidgetPage: React.FC<WidgetPageProps> = ({ id }) => {
             <Box bgColor="white" w="365px" h="365px">
               <Center h="100%">
                 <LivePreview />
-
-                {/*  <Box textAlign="center"> */}
-                {/*    <Heading size="3xl"> */}
-                {/*      07:54:34 */}
-                {/*    </Heading> */}
-                {/*    <Text fontSize="lg" color="gray.300" mt={3}>Friday</Text> */}
-                {/*  </Box> */}
               </Center>
             </Box>
           </Center>

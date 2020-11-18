@@ -8,8 +8,7 @@ const AuthPage: React.FC = () => {
   const history = useHistory();
 
   const onClick = () => {
-    authenticateUser().then((user) => {
-      console.log(user);
+    authenticateUser().then(() => {
       history.push('/');
     });
   };

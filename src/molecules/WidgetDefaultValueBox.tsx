@@ -1,22 +1,25 @@
 import React from 'react';
 import { useRecoilState } from 'recoil';
 import { Box, Input } from '@chakra-ui/react';
-import { widgetVariableState } from '../recoil/atoms';
+import { selectedWidgetState } from '../recoil/atoms';
 import { updateWidgetVariableField } from '../utils/widget-variables.utils';
-import { WidgetVariableState } from '../interfaces/widget.interface';
+import { WidgetVariable } from '../interfaces/widget.interface';
 import WidgetPageFormLabel from '../atoms/WidgetPageFormLabel';
 
 interface WidgetDefaultValueBoxProps {
-  widgetVariable: WidgetVariableState;
+  widgetVariable: WidgetVariable;
 }
 
 const WidgetDefaultValueBox: React.FC<WidgetDefaultValueBoxProps> = ({
   widgetVariable: {
-    name, description, id, defaultValue,
+    name, description, id, value,
   },
 }) => {
-  const [widgetVariables, setWidgetVariables] = useRecoilState(widgetVariableState);
+  const [selectedWidget, setSelectedWidget] = useRecoilState(selectedWidgetState);
 
+  if (!selectedWidget) {
+    return <Box />;
+  }
   return (
     <Box mt={2}>
       <WidgetPageFormLabel>
@@ -26,12 +29,12 @@ const WidgetDefaultValueBox: React.FC<WidgetDefaultValueBoxProps> = ({
         {description}
       </WidgetPageFormLabel>
       <Input
-        placeholder="Default Value"
-        value={defaultValue}
+        placeholder="Value"
+        value={value}
         onChange={(e) => updateWidgetVariableField(
-          'defaultValue',
-          setWidgetVariables,
-        )(e.target.value, id, widgetVariables)}
+          'value',
+          setSelectedWidget,
+        )(e.target.value, id, selectedWidget)}
       />
     </Box>
   );
