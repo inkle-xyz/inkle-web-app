@@ -1,4 +1,6 @@
 import {
+  AlertIcon,
+  Alert,
   Box, Center, Image, SimpleGrid,
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
@@ -6,6 +8,7 @@ import { LivePreview, LiveProvider } from 'react-live';
 import dracula from 'prism-react-renderer/themes/dracula';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { useHistory } from 'react-router-dom';
+import { Resizable } from 're-resizable';
 import LogoIcon from '../assets/logo-icon.svg';
 import WidgetPageLeft from '../organisms/WidgetPageLeft';
 import { originalSelectedWidgetState, selectedWidgetState, userWidgetCodeState } from '../recoil/atoms';
@@ -68,10 +71,37 @@ const WidgetPage: React.FC<WidgetPageProps> = ({ id }) => {
         </Box>
         <Box w="100%" bgColor="gray.200" h="100%">
           <Center h="100%">
-            <Box bgColor="white" w="365px" h="365px">
-              <Center h="100%">
-                <LivePreview />
-              </Center>
+            <Box>
+              <Alert status="info" mb={4} textAlign="center" variant="solid" w="450px" mx="auto">
+                💡 Drag the border to preview this widget in different sizes
+              </Alert>
+              <Resizable
+                style={{
+                  marginLeft: 'auto',
+                  marginRight: 'auto',
+                }}
+                defaultSize={{
+                  height: '365px',
+                  width: '365px',
+                }}
+              >
+                <Box
+                  bgColor={
+                    selectedWidget.isDarkMode
+                      ? '#2F3437' : 'white'
+                  }
+                  w="100%"
+                  h="100%"
+                  color={
+                    selectedWidget.isDarkMode
+                      ? 'white' : 'gray.800'
+                  }
+                >
+                  <Center h="100%">
+                    <LivePreview />
+                  </Center>
+                </Box>
+              </Resizable>
             </Box>
           </Center>
         </Box>

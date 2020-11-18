@@ -20,7 +20,7 @@ const createUserInDb = (
       db.collection('users')
         .doc(id)
         .get()
-        .then((user) => resolve(user));
+        .then((user) => resolve(user.data() as User));
     });
 });
 
@@ -37,7 +37,7 @@ const authenticateUser = (): Promise<User> => new Promise(((resolve, reject) => 
         } = userFromAuth;
         userCollection.doc(uid).get().then((doc) => {
           if (doc.exists) {
-            resolve(doc.data());
+            resolve(doc.data() as User);
           }
           createUserInDb(uid, email, displayName, photoURL).then((user) => resolve(user));
         });
