@@ -1,5 +1,5 @@
 import {
-  Box, Flex, Heading, Icon, Image, Text,
+  Box, Button, Flex, Heading, Icon, Image, Text,
 } from '@chakra-ui/react';
 import React from 'react';
 import { AiOutlineLike, IoIosStats } from 'react-icons/all';
@@ -9,14 +9,18 @@ import { Widget } from '../interfaces/widget.interface';
 
 type WidgetCardProps = {
   widget: Widget;
+  isCommunity?: boolean;
+  onClone?: (widget: Widget) => void
 }
 
 const WidgetCard: React.FC<WidgetCardProps> = ({
   widget,
+  isCommunity,
+  onClone,
 }) => {
   const history = useHistory();
   const {
-    name, description, author, image, id,
+    name, description, image, id,
   } = widget;
 
   const onClick = () => {
@@ -30,9 +34,11 @@ const WidgetCard: React.FC<WidgetCardProps> = ({
       h="450px"
       flexDirection="column"
       overflow="hidden"
-      onClick={() => onClick()}
     >
-      <Box flexGrow={1}>
+      <Box
+        flexGrow={1}
+        onClick={() => onClick()}
+      >
         {
           image
             ? <Image src={image} />
@@ -48,13 +54,21 @@ const WidgetCard: React.FC<WidgetCardProps> = ({
           lineHeight="tight"
           isTruncated
           size="md"
+          onClick={() => onClick()}
         >
           {name}
         </Heading>
-        <Text mt={2} fontSize="sm">
+        <Text
+          mt={2}
+          fontSize="sm"
+          onClick={() => onClick()}
+        >
           {description}
         </Text>
-        <Flex mt={5} justify="space-between">
+        <Flex
+          mt={5}
+          justify="space-between"
+        >
           <Flex>
             <Flex alignItems="center">
               <Icon as={AiOutlineLike} color="gray.300" />
@@ -65,7 +79,14 @@ const WidgetCard: React.FC<WidgetCardProps> = ({
               <Text color="gray.300" ml={1}>12</Text>
             </Flex>
           </Flex>
-          <Text color="gray.300">{author}</Text>
+          {
+            isCommunity && onClone
+              ? (
+                <Button size="sm" colorScheme="yellow" color="white" onClick={() => onClone(widget)}>
+                  Clone Widget
+                </Button>
+              ) : <></>
+          }
         </Flex>
       </Box>
     </Flex>

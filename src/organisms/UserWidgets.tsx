@@ -2,14 +2,15 @@ import React, { useEffect, useState } from 'react';
 import {
   Box, Center, SimpleGrid, Spinner, useToast,
 } from '@chakra-ui/react';
+import { useRecoilState } from 'recoil';
 import SearchSortBar from './SearchSortBar';
 import WidgetCard from '../molecules/WidgetCard';
 import EmptyWidgetCard from '../molecules/EmptyWidgetCard';
 import { getUsersWidgets } from '../services/widget.services';
 import { Widget } from '../interfaces/widget.interface';
+import { usersWidgetsState } from '../recoil/atoms';
 
 type UserWidgetsState = {
-  usersWidgets: Widget[];
   filteredUserWidgets: Widget[];
   loading: boolean;
   isFiltered: boolean;
@@ -18,24 +19,26 @@ type UserWidgetsState = {
 
 const UserWidgets: React.FC = () => {
   const [state, setState] = useState<UserWidgetsState>({
-    usersWidgets: [],
     filteredUserWidgets: [],
     loading: true,
     isFiltered: false,
     hasLoaded: false,
   });
+  const [usersWidgets, setUsersWidgets] = useRecoilState(usersWidgetsState);
 
   const toast = useToast();
 
   useEffect(() => {
     if (!state.hasLoaded) {
-      getUsersWidgets().then((widgets) => setState({
-        usersWidgets: widgets,
-        filteredUserWidgets: widgets,
-        loading: false,
-        isFiltered: false,
-        hasLoaded: true,
-      })).catch((error) => toast({
+      getUsersWidgets().then((widgets) => {
+        setUsersWidgets(widgets);
+        setState({
+          filteredUserWidgets: widgets,
+          loading: false,
+          isFiltered: false,
+          hasLoaded: true,
+        });
+      }).catch((error) => toast({
         status: 'error',
         title: error.toString(),
       }));
@@ -43,7 +46,10 @@ const UserWidgets: React.FC = () => {
   });
 
   const searchHandler = (searchTerm: string): void => {
-    const filteredWidgets = state.usersWidgets.filter((s) => s.name.includes(searchTerm));
+    if (!usersWidgets) {
+      return;
+    }
+    const filteredWidgets = usersWidgets.filter((s) => s.name.includes(searchTerm));
     if (searchTerm !== '') {
       setState({
         ...state,
@@ -59,7 +65,7 @@ const UserWidgets: React.FC = () => {
   };
 
   const getWidgetsToRender = (): Widget[] => (state.isFiltered
-    ? state.filteredUserWidgets : state.usersWidgets);
+    ? state.filteredUserWidgets : usersWidgets ?? []);
 
   const sortHandler = (searchTerm: string): void => {
     // console.log(searchTerm);

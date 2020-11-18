@@ -29,7 +29,7 @@ import WidgetVariableBox from '../molecules/WidgetVariableBox';
 import WidgetDefaultValueBox from '../molecules/WidgetDefaultValueBox';
 import WidgetPageFormLabel from '../atoms/WidgetPageFormLabel';
 import { Widget } from '../interfaces/widget.interface';
-import { saveWidget } from '../services/widget.services';
+import { deleteWidget, saveWidget } from '../services/widget.services';
 import { deepEqual } from '../utils/utils';
 
 const StyledError = styled(LiveError)`
@@ -102,6 +102,19 @@ const WidgetPageLeft: React.FC = () => {
     }
   };
 
+  const exitPage = () => {
+    setSelectedWidget(null);
+    toast.closeAll();
+    history.goBack();
+  };
+
+  const onDeleteClick = () => {
+    if (selectedWidget?.id) {
+      deleteWidget(selectedWidget.id);
+      exitPage();
+    }
+  };
+
   useEffect(() => {
     if (!deepEqual(selectedWidget, originalSelectedWidget)) {
       if (toastId === '') {
@@ -133,14 +146,10 @@ const WidgetPageLeft: React.FC = () => {
                 if (isUnsavedChanges) {
                   // eslint-disable-next-line no-alert
                   if (window.confirm('Are you sure you want to exit without saving?')) {
-                    setSelectedWidget(null);
-                    toast.closeAll();
-                    history.goBack();
+                    exitPage();
                   }
                 } else {
-                  setSelectedWidget(null);
-                  toast.closeAll();
-                  history.goBack();
+                  exitPage();
                 }
               }}
               mr={4}
@@ -157,6 +166,12 @@ const WidgetPageLeft: React.FC = () => {
               disabled={!isUnsavedChanges}
             >
               Save
+            </Button>
+            <Button colorScheme="red"
+              onClick={() => onDeleteClick()}
+              mr={4}
+            >
+              Delete
             </Button>
             <Box mt={2}>
               <WidgetPageFormLabel>

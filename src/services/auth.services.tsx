@@ -53,7 +53,7 @@ const authenticateUser = (): Promise<any> => new Promise(((resolve, reject) => {
 const getCurrentUser = (): Promise<User> => new Promise((resolve) => {
   auth.onAuthStateChanged((user) => {
     if (user) {
-      userCollection.doc(user.uid).get().then((u) => resolve(u.data() as User));
+      userCollection.doc(user.uid).get().then((u) => resolve({ ...u.data(), id: user.uid } as User));
     }
   });
 });

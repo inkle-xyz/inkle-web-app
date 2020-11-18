@@ -2,17 +2,18 @@ import React, { useState, useEffect } from 'react';
 import {
   Box, Center, SimpleGrid, Spinner, useToast,
 } from '@chakra-ui/react';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { Widget } from '../interfaces/widget.interface';
-import { getCommunityWidgets } from '../services/widget.services';
+import { cloneWidget, getCommunityWidgets, getUsersWidgets } from '../services/widget.services';
 import WidgetCard from '../molecules/WidgetCard';
 import SearchSortBar from './SearchSortBar';
+import { userState, usersWidgetsState } from '../recoil/atoms';
 
 type CommunityWidgetsState = {
   widgets: Widget[];
   startAt: number;
   isInitialized: boolean;
   isLoading: boolean;
-  isFetchingData: boolean;
 }
 
 const CommunityWidgets: React.FC = () => {
@@ -21,52 +22,13 @@ const CommunityWidgets: React.FC = () => {
     startAt: 1,
     isInitialized: false,
     isLoading: true,
-    isFetchingData: false,
   });
 
   const toast = useToast();
+  const user = useRecoilValue(userState);
+  const setUsersWidgets = useSetRecoilState(usersWidgetsState);
+
   const numberOfWidgetsToFetch = 8;
-
-  const getWidgets = async () => {
-    try {
-      console.log('Getting Widgets');
-      console.log('startAt', state.startAt);
-      console.log('numberOfWidgetsToFetch', numberOfWidgetsToFetch);
-      console.log('Existing widgets', state.widgets);
-      const oldWidgets: [] = JSON.parse(JSON.stringify(state.widgets));
-      const newWidgets = await getCommunityWidgets(numberOfWidgetsToFetch, state.widgets[state.widgets.length]?.name);
-      console.log(oldWidgets);
-      console.log(newWidgets);
-      console.log();
-      setState({
-        ...state,
-        isFetchingData: false,
-        startAt: state.startAt + numberOfWidgetsToFetch,
-        widgets: newWidgets,
-      });
-    } catch (e) {
-      toast({
-        status: 'error',
-        title: 'Error Getting Community Widgets',
-        description: e.toString(),
-      });
-    }
-  };
-
-  const handleScroll = (): void => {
-    if (
-      Math.ceil(
-        window.innerHeight + document.documentElement.scrollTop,
-      ) !== document.documentElement.offsetHeight
-      || state.isFetchingData
-    ) return;
-    console.log('Scrolling');
-    setState({
-      ...state,
-      isFetchingData: true,
-    });
-    getWidgets();
-  };
 
   useEffect(() => {
     getCommunityWidgets(numberOfWidgetsToFetch, state.widgets[state.widgets.length]?.name).then((widgets) => {
@@ -82,9 +44,20 @@ const CommunityWidgets: React.FC = () => {
 
   const searchHandler = (value: string) => console.log(value);
   const sortHandler = (value: string) => console.log(value);
+  const onWidgetClone = (widget: Widget) => {
+    if (user) {
+      cloneWidget(user, widget).then(() => getUsersWidgets().then((widgets) => setUsersWidgets(widgets)));
+    } else {
+      toast({
+        status: 'error',
+        title: 'Error cloning widget',
+        description: 'Please refresh page',
+      });
+    }
+  };
 
   return (
-    <Box mt="4rem">
+    <Box my="4rem">
       <SearchSortBar
         title="Community 🌱"
         searchHandler={searchHandler}
@@ -109,20 +82,13 @@ const CommunityWidgets: React.FC = () => {
             state.widgets
               .map((widget) => (
                 <WidgetCard
+                  isCommunity
+                  onClone={onWidgetClone}
                   key={widget.id}
                   widget={widget}
                 />
               ))
           }
-            {state.isFetchingData && (
-            <Spinner
-              thickness="4px"
-              speed="0.65s"
-              emptyColor="gray.200"
-              color="yellow.500"
-              size="md"
-            />
-            )}
           </SimpleGrid>
         )}
     </Box>

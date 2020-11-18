@@ -11,7 +11,6 @@ export interface Widget {
   description: string;
   isDarkMode: boolean;
   variables: WidgetVariable[];
-  owner: string; // Who owns the deployed instance
   author: string; // Author Name
   authorName: string; // Author Email
   isPublished: boolean;

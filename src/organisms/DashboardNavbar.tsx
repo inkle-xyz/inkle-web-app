@@ -11,22 +11,28 @@ import {
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+import { useSetRecoilState } from 'recoil';
 import LogoIcon from '../assets/logo-icon.svg';
 import { auth } from '../firebase.config';
 import { getCurrentUser } from '../services/auth.services';
 import { User } from '../interfaces/user.interface';
+import { userState } from '../recoil/atoms';
 
 const DashboardNavbar: React.FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const setUserState = useSetRecoilState(userState);
 
   const [state, setState] = useState<{ user: User | undefined}>({
     user: undefined,
   });
 
   useEffect(() => {
-    getCurrentUser().then((user) => setState({
-      user,
-    }));
+    getCurrentUser().then((user) => {
+      setUserState(user);
+      setState({
+        user,
+      });
+    });
   }, []);
 
   return (

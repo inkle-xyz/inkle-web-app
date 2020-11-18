@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { LivePreview, LiveProvider } from 'react-live';
 import dracula from 'prism-react-renderer/themes/dracula';
 import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useHistory } from 'react-router-dom';
 import LogoIcon from '../assets/logo-icon.svg';
 import WidgetPageLeft from '../organisms/WidgetPageLeft';
 import { originalSelectedWidgetState, selectedWidgetState } from '../recoil/atoms';
@@ -27,6 +28,8 @@ const WidgetPage: React.FC<WidgetPageProps> = ({ id }) => {
     hasInitialized: false,
   });
 
+  const history = useHistory();
+
   const [selectedWidget, setSelectedWidget] = useRecoilState(selectedWidgetState);
   const setOriginalSelectedWidget = useSetRecoilState(originalSelectedWidgetState);
 
@@ -35,6 +38,10 @@ const WidgetPage: React.FC<WidgetPageProps> = ({ id }) => {
       getWidget(id).then((widget) => {
         setSelectedWidget(widget);
         setOriginalSelectedWidget(widget);
+      }).catch((e: Error) => {
+        if (e.message === 'Widget not found') {
+          history.goBack();
+        }
       });
       setState({
         loading: false,
