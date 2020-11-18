@@ -48,7 +48,6 @@ const WidgetPage: React.FC<WidgetPageProps> = ({ id }) => {
   const passedProps: Record<string, any> = {};
 
   useEffect(() => {
-    console.log(id);
     for (let i = 0; i < widgetVariables.length; i += 1) {
       passedProps[widgetVariables[i].name] = widgetVariables[i].defaultValue;
     }
