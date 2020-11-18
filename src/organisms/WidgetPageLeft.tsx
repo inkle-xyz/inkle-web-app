@@ -125,7 +125,7 @@ const WidgetPageLeft: React.FC = () => {
   return (
     selectedWidget
       ? (
-        <Box mt="4rem">
+        <Box my="4rem">
           <Flex alignItems="center">
             <IconButton aria-label="Icon button"
               variant="ghost"

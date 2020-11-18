@@ -2,7 +2,7 @@ import React from 'react';
 import { useRecoilState } from 'recoil';
 import { Box, Input } from '@chakra-ui/react';
 import { selectedWidgetState } from '../recoil/atoms';
-import { updateWidgetVariableField } from '../utils/widget-variables.utils';
+import { updateWidgetVariableField } from '../utils/widget.utils';
 import { WidgetVariable } from '../interfaces/widget.interface';
 import WidgetPageFormLabel from '../atoms/WidgetPageFormLabel';
 

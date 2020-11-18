@@ -4,7 +4,7 @@ import {
   Box, Flex, Input, Text, Textarea, Spacer, Button,
 } from '@chakra-ui/react';
 import { selectedWidgetState } from '../recoil/atoms';
-import { deleteWidgetVariable, updateWidgetVariableField } from '../utils/widget-variables.utils';
+import { deleteWidgetVariable, updateWidgetVariableField } from '../utils/widget.utils';
 import { WidgetVariable } from '../interfaces/widget.interface';
 
 interface WidgetVariableBoxProps {

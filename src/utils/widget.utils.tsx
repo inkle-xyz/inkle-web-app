@@ -28,3 +28,14 @@ export const deleteWidgetVariable = (
     variables: newWidgetVariables.filter((variable) => variable.id !== id),
   });
 };
+
+export const getScopeFromWidget = (widget: Widget): Record<string, any> => {
+  const p: Record<string, any> = {};
+  if (widget) {
+    const widgetVariables = widget?.variables;
+    for (let i = 0; i < widgetVariables.length; i += 1) {
+      p[widgetVariables[i].name] = widgetVariables[i].value;
+    }
+  }
+  return p;
+};

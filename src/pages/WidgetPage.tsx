@@ -10,6 +10,7 @@ import WidgetPageLeft from '../organisms/WidgetPageLeft';
 import { originalSelectedWidgetState, selectedWidgetState } from '../recoil/atoms';
 import LoadingPage from './LoadingPage';
 import { getWidget } from '../services/widget.services';
+import { getScopeFromWidget } from '../utils/widget.utils';
 
 type WidgetPageProps = {
   id: string;
@@ -29,17 +30,6 @@ const WidgetPage: React.FC<WidgetPageProps> = ({ id }) => {
   const [selectedWidget, setSelectedWidget] = useRecoilState(selectedWidgetState);
   const setOriginalSelectedWidget = useSetRecoilState(originalSelectedWidgetState);
 
-  const getPassedProps = (): Record<string, any> => {
-    const p: Record<string, any> = {};
-    if (selectedWidget) {
-      const widgetVariables = selectedWidget?.variables;
-      for (let i = 0; i < widgetVariables.length; i += 1) {
-        p[widgetVariables[i].name] = widgetVariables[i].value;
-      }
-    }
-    return p;
-  };
-
   useEffect(() => {
     if (!state.hasInitialized) {
       getWidget(id).then((widget) => {
@@ -58,10 +48,10 @@ const WidgetPage: React.FC<WidgetPageProps> = ({ id }) => {
   }
 
   return (
-    <LiveProvider theme={dracula} code={selectedWidget.code} scope={getPassedProps()}>
+    <LiveProvider theme={dracula} code={selectedWidget.code} scope={getScopeFromWidget(selectedWidget)}>
       <SimpleGrid columns={2} h="100vh">
         <Box w="100%" overflow="scroll">
-          <Box maxWidth="500px" mx="auto">
+          <Box width="500px" mx="auto">
             <Image src={LogoIcon} mt={5} />
             <WidgetPageLeft />
           </Box>
