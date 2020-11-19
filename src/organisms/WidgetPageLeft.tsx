@@ -434,6 +434,13 @@ const WidgetPageLeft: React.FC = () => {
                       You can access the widget variables with
                       {' '}
                       <code>variable_name</code>
+                      . Available variables are:
+                      <code>isDarkMode</code>
+                      {' '}
+                      and
+                      <code>authorName</code>
+                      .
+                      Access is also given to the `styled` React library to make styled components!
                     </Text>
                     <StyledError />
 

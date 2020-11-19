@@ -36,7 +36,15 @@ const WidgetForNotionPage: React.FC<Props> = ({ id }) => {
           h="100vh"
           w="100vw"
         >
-          <LiveProvider code={widget.code} scope={{ ...getScopeFromWidget(widget), styled }}>
+          <LiveProvider
+            code={widget.code}
+            scope={{
+              ...getScopeFromWidget(widget),
+              styled,
+              isDarkMode: widget.isDarkMode,
+              authorName: widget.authorName,
+            }}
+          >
             <LivePreview />
           </LiveProvider>
         </Box>

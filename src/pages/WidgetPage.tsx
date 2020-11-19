@@ -61,7 +61,16 @@ const WidgetPage: React.FC<WidgetPageProps> = ({ id }) => {
   }
 
   return (
-    <LiveProvider theme={dracula} code={editedCode} scope={{ ...getScopeFromWidget(selectedWidget), styled }}>
+    <LiveProvider
+      theme={dracula}
+      code={editedCode}
+      scope={{
+        ...getScopeFromWidget(selectedWidget),
+        styled,
+        isDarkMode: selectedWidget.isDarkMode,
+        authorName: selectedWidget.authorName,
+      }}
+    >
       <SimpleGrid columns={2} h="100vh">
         <Box w="100%" overflow="scroll">
           <Box width="500px" mx="auto">
@@ -81,6 +90,7 @@ const WidgetPage: React.FC<WidgetPageProps> = ({ id }) => {
                 style={{
                   marginLeft: 'auto',
                   marginRight: 'auto',
+                  overflow: 'hidden',
                 }}
                 defaultSize={{
                   height: '365px',
