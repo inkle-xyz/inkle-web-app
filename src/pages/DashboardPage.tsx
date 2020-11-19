@@ -4,7 +4,7 @@ import CommunityWidgets from '../organisms/CommunityWidgets';
 import UserWidgets from '../organisms/UserWidgets';
 
 const DashboardPage: React.FC = () => (
-  <Box>
+  <Box m={5}>
     <UserWidgets />
     <CommunityWidgets />
   </Box>

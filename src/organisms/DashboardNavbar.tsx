@@ -65,7 +65,7 @@ const DashboardNavbar: React.FC = () => {
             </MenuItem>
           </MenuList>
         </Menu>
-        <a href="https://twitter.com/inkle_xyz" target="_blank" rel="noreferrer">
+        <a href="https://twitter.com/inkle_xyz" target="_blank" rel="noopener noreferrer">
           <Button
             variant="outline"
             size="md"
