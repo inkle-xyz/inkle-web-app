@@ -106,7 +106,7 @@ const UserWidgets: React.FC = () => {
           </Center>
         )
         : (
-          <SimpleGrid columns={{ sm: 1, md: 3 }} spacing={10} mt={10} h="175px">
+          <SimpleGrid columns={{ sm: 1, md: 3 }} spacing={10} mt={10} mH="175px">
             {
             getWidgetsToRender()
               .map((widget) => (

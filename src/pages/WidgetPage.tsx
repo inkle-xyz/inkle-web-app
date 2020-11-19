@@ -8,6 +8,7 @@ import dracula from 'prism-react-renderer/themes/dracula';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { useHistory } from 'react-router-dom';
 import { Resizable } from 're-resizable';
+import styled from '@emotion/styled';
 import LogoIcon from '../assets/logo-icon.svg';
 import WidgetPageLeft from '../organisms/WidgetPageLeft';
 import { originalSelectedWidgetState, selectedWidgetState, userWidgetCodeState } from '../recoil/atoms';
@@ -60,7 +61,7 @@ const WidgetPage: React.FC<WidgetPageProps> = ({ id }) => {
   }
 
   return (
-    <LiveProvider theme={dracula} code={editedCode} scope={getScopeFromWidget(selectedWidget)}>
+    <LiveProvider theme={dracula} code={editedCode} scope={{ ...getScopeFromWidget(selectedWidget), styled }}>
       <SimpleGrid columns={2} h="100vh">
         <Box w="100%" overflow="scroll">
           <Box width="500px" mx="auto">

@@ -8,7 +8,7 @@ type Params = {
 }
 
 const EmptyWidgetCard: React.FC<Params> = ({ onWidgetCreate }) => (
-  <Box borderWidth="3px" borderStyle="dashed" borderColor="gray.300" borderRadius="lg" w="100%" h="100%">
+  <Box borderWidth="3px" borderStyle="dashed" borderColor="gray.300" borderRadius="lg" w="100%" h="175px">
     <Center w="100%" h="100%">
       <Button
         my="auto"

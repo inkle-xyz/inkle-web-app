@@ -4,6 +4,7 @@ import {
   LiveProvider,
   LivePreview,
 } from 'react-live';
+import styled from '@emotion/styled';
 import { Widget } from '../interfaces/widget.interface';
 import { getWidget } from '../services/widget.services';
 import { getScopeFromWidget } from '../utils/widget.utils';
@@ -35,7 +36,7 @@ const WidgetForNotionPage: React.FC<Props> = ({ id }) => {
           h="100vh"
           w="100vw"
         >
-          <LiveProvider code={widget.code} scope={getScopeFromWidget(widget)}>
+          <LiveProvider code={widget.code} scope={{ ...getScopeFromWidget(widget), styled }}>
             <LivePreview />
           </LiveProvider>
         </Box>
