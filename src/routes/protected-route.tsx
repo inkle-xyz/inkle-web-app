@@ -23,6 +23,7 @@ const ProtectedRoute: React.FC<Props> = ({ path, isAuthenticated, render }) => {
         toast({
           status: 'error',
           title: 'Please Log In First!',
+          duration: 1000,
         });
         return <Redirect to="/" />;
       }}

@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import DashboardPage from './pages/DashboardPage';
 import NavbarContainer from './containers/DashboardContainer';
 import WidgetPage from './pages/WidgetPage';
@@ -9,29 +9,49 @@ import WidgetForNotionPage from './pages/WidgetForNotionPage';
 import HomePage from './pages/HomePage';
 import WelcomePage from './pages/WelcomePage';
 import { userState } from './recoil/atoms';
+import { getCurrentUser } from './services/auth.services';
+import LoadingPage from './pages/LoadingPage';
 
 const App: React.FC = () => {
-  const user = useRecoilValue(userState);
+  const [user, setUserState] = useRecoilState(userState);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Initialize global user state
+  useEffect(() => {
+    getCurrentUser().then((u) => {
+      setUserState(u);
+      setIsLoading(false);
+    });
+  }, [setUserState]);
 
   return (
     <Switch>
-      <Route path="/w/:id" render={(props) => <WidgetForNotionPage id={props.match.params.id} />} />
-      <ProtectedRoute
-        path="/widget/:id"
-        isAuthenticated={typeof user !== 'undefined'}
-        render={
-          (props) => <WidgetPage id={props.match.params.id} />
-        }
-      />
-      <NavbarContainer>
-        <Route path="/welcome" component={WelcomePage} exact />
-        <ProtectedRoute
-          path="/dashboard"
-          render={() => <DashboardPage />}
-          isAuthenticated={typeof user !== 'undefined'}
-        />
-        <Route path="/" component={HomePage} exact />
-      </NavbarContainer>
+      {
+        isLoading
+          ? <LoadingPage />
+          : (
+            <>
+              <Route path="/w/:id" render={(props) => <WidgetForNotionPage id={props.match.params.id} />} />
+              <ProtectedRoute
+                path="/widget/:id"
+                isAuthenticated={user !== null}
+                render={
+              (props) => (<WidgetPage id={props.match.params.id} />)
+            }
+              />
+              <NavbarContainer>
+                <Route path="/welcome" component={WelcomePage} exact />
+                <ProtectedRoute
+                  path="/dashboard"
+                  render={() => <DashboardPage />}
+                  isAuthenticated={user !== null}
+                />
+                <Route path="/" component={HomePage} exact />
+              </NavbarContainer>
+
+            </>
+          )
+      }
     </Switch>
   );
 };

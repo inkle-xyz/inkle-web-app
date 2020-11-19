@@ -9,35 +9,20 @@ import {
   Center,
   ModalFooter,
 } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
-import { useSetRecoilState } from 'recoil';
+import React from 'react';
+import { Link as RouterLink, useHistory } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
 import { AiOutlineTwitter } from 'react-icons/all';
 import LogoIcon from '../assets/logo-icon.svg';
 import { auth } from '../firebase.config';
-import { getCurrentUser } from '../services/auth.services';
-import { User } from '../interfaces/user.interface';
 import { userState } from '../recoil/atoms';
 import NavbarContainer from '../atoms/DefaultContainer';
 import AuthModal from '../molecules/AuthModal';
 
 const Navbar: React.FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const setUserState = useSetRecoilState(userState);
-
-  const [state, setState] = useState<{ user: User | undefined}>({
-    user: undefined,
-  });
-
-  useEffect(() => {
-    getCurrentUser().then((user) => {
-      setUserState(user);
-      setState({
-        user,
-      });
-    });
-  // eslint-disable-next-line
-  }, []);
+  const [user, setUserState] = useRecoilState(userState);
+  const history = useHistory();
 
   return (
     <NavbarContainer>
@@ -49,13 +34,13 @@ const Navbar: React.FC = () => {
         </Box>
         <Spacer />
         <Flex alignItems="center" color="gray.600" fontWeight="400">
-          {state.user?.displayName
+          {user?.displayName
             ? (
               <>
                 <Text mr={4}>
                   Hello,
                   {' '}
-                  {state.user.displayName}
+                  {user.displayName}
                   {' '}
                   😄
                   {' '}
@@ -70,8 +55,10 @@ const Navbar: React.FC = () => {
                       Account Information
                     </MenuItem>
                     <MenuItem onClick={() => {
-                      auth.signOut();
-                      setUserState(null);
+                      auth.signOut().then(() => {
+                        setUserState(null);
+                        history.push('/');
+                      });
                     }}
                     >
                       Sign Out
@@ -115,14 +102,14 @@ const Navbar: React.FC = () => {
                 Email
               </Heading>
               <Text>
-                {state?.user?.email}
+                {user?.email}
               </Text>
 
               <Heading size="md" color="gray.700" mt={3}>
                 Account Since
               </Heading>
               <Text>
-                {state?.user?.createdAt}
+                {user?.createdAt}
               </Text>
 
               <Heading size="md" color="gray.700" mt={3}>

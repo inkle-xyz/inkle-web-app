@@ -56,10 +56,12 @@ const authenticateUser = (): Promise<boolean> => new Promise(((resolve, reject) 
   });
 }));
 
-const getCurrentUser = (): Promise<User> => new Promise((resolve) => {
+const getCurrentUser = (): Promise<User | null> => new Promise((resolve) => {
   auth.onAuthStateChanged((user) => {
     if (user) {
       userCollection.doc(user.uid).get().then((u) => resolve({ ...u.data(), id: user.uid } as User));
+    } else {
+      resolve(null);
     }
   });
 });
