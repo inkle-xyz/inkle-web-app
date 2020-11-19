@@ -8,6 +8,7 @@ import styled from '@emotion/styled';
 import { Widget } from '../interfaces/widget.interface';
 import { getWidget } from '../services/widget.services';
 import { getScopeFromWidget } from '../utils/widget.utils';
+import { analytics } from '../firebase.config';
 
 type Props = {
   id: string;
@@ -17,7 +18,10 @@ const WidgetForNotionPage: React.FC<Props> = ({ id }) => {
   const [widget, setWidget] = useState<Widget>();
 
   useEffect(() => {
-    getWidget(id).then((w) => setWidget(w));
+    getWidget(id).then((w) => {
+      setWidget(w);
+      analytics.logEvent(`view_widget_${w.id}_${w.name}`);
+    });
     // eslint-disable-next-line
   }, []);
 

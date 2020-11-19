@@ -22,7 +22,7 @@ const HomePage: React.FC = () => {
     <Box>
       <Container maxW="800px" px="4rem" mt="5rem" w="100%">
         <Heading color="gray.700" size="xl" as="h1" textAlign="center" lineHeight="56px">
-          Beautify your Notion
+          Beautify Your Notion
           <br />
           With Custom Widgets
         </Heading>
