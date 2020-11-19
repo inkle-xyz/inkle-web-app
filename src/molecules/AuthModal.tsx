@@ -57,7 +57,7 @@ const AuthModal: React.FC = () => {
               onClick={() => authenticateUser().then((newUser) => {
                 setSignupWidgetStateOpen(false);
                 setUserState(newUser);
-                if (newUser) {
+                if (newUser.isShownWelcome) {
                   history.push('/welcome');
                 } else {
                   history.push('/dashboard');

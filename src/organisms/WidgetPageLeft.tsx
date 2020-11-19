@@ -429,6 +429,8 @@ const WidgetPageLeft: React.FC = () => {
                       <code>authorName</code>
                       .
                       Access is also given to the `styled` React library to make styled components!
+                      <br />
+                      Please note that we  functional components are not supported, only class components or plain html
                     </Text>
 
                     <LiveEditor onChangeCapture={(e) => {

@@ -90,12 +90,43 @@ export const cloneWidget = (
 export const deleteWidget = (widgetId: string): Promise<void> => widgetsCollection.doc(widgetId).delete();
 
 export const createNewWidget = (currentUser: User): Promise<firebase.firestore.DocumentReference> => {
+  const defaultCode = `class Counter extends React.Component {  
+  constructor() {    
+    super();     
+    this.state = { time: new Date().toLocaleTimeString() }  
+  }
+
+  componentDidMount() {
+    this.interval = setInterval(() => {
+      this.setState(() => ({ 
+          time: new Date().toLocaleTimeString() 
+       }))     
+      }, 1000)
+   }
+   
+  componentWillUnmount() {
+    clearInterval(this.interval)  
+  }  
+  
+  render() {
+    return (
+      <div style={{textAlign: 'center', paddingTop: '8.5rem'}}> 
+        <div style={{fontWeight: 'bold', fontSize: '38px'}}>  
+          {this.state.time}        
+        </div>
+        Greetings {name}
+      </div>
+    )
+  }
+}
+  `;
+
   const newWidget: Partial<Widget> = {
     isFeatured: false,
     variables: [],
     name: 'New Widget',
     authorName: currentUser.displayName,
-    code: '<div>Hello World</div>',
+    code: defaultCode,
     isPublished: false,
     description: 'New Widget',
     author: currentUser.id,

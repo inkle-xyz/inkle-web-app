@@ -15,6 +15,7 @@ const createUserInDb = (
       email,
       displayName,
       photoUrl,
+      isShownWelcome: true,
       createdAt: new Date().toLocaleDateString(),
     }).then(() => {
       db.collection('users')
@@ -27,7 +28,7 @@ const createUserInDb = (
 const authenticateUser = (): Promise<User> => new Promise(((resolve, reject) => {
   auth.onAuthStateChanged((user) => {
     if (user) {
-      resolve();
+      userCollection.doc(user.uid).get().then((u) => resolve({ ...u.data(), id: user.uid } as User));
     } else {
       auth.signInWithPopup(googleAuthProvider).then((result) => {
         if (result.user) {
@@ -41,9 +42,9 @@ const authenticateUser = (): Promise<User> => new Promise(((resolve, reject) => 
             } = userFromAuth;
             userCollection.doc(uid).get().then((doc) => {
               if (doc.exists) {
-                resolve(doc.data() as User);
+                resolve({ ...doc.data(), id: uid } as User);
               }
-              createUserInDb(uid, email, displayName, photoURL).then((user) => resolve(user));
+              createUserInDb(uid, email, displayName, photoURL).then((u) => resolve(u));
             });
           }
         } else {
@@ -66,8 +67,15 @@ const getCurrentUser = (): Promise<User | null> => new Promise((resolve) => {
   });
 });
 
+const updateUser = (userId: string, newData: Partial<User>): Promise<null> => new Promise((resolve) => {
+  userCollection.doc(userId).update(newData).then(() => {
+    resolve();
+  });
+});
+
 export {
   createUserInDb,
   authenticateUser,
   getCurrentUser,
+  updateUser,
 };
