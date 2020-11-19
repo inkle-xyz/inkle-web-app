@@ -1,40 +1,39 @@
 import React, { useEffect, useState } from 'react';
-import { Route, useHistory } from 'react-router-dom';
+import { Redirect, Route } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router';
+import { useToast } from '@chakra-ui/react';
 import { auth } from '../firebase.config';
-import LoadingPage from '../pages/LoadingPage';
 
 type Props = {
-  exact?: boolean,
   path: string,
-  render?: (props: RouteComponentProps<any>) => React.ReactNode;
-  component?: React.FC
+  render: (props: RouteComponentProps<any>) => React.ReactNode;
 }
 
-const ProtectedRoute: React.FC<Props> = ({ ...rest }) => {
-  const [authState, setAuthState] = useState({
-    isAuthenticated: true,
-    initializing: true,
-  });
-  const history = useHistory();
+const ProtectedRoute: React.FC<Props> = ({ render, path }) => {
+  const [isUser, setIsUser] = useState<boolean | undefined>(undefined);
+  const toast = useToast();
 
-  useEffect(() => auth.onAuthStateChanged((user) => {
-    if (user) {
-      setAuthState({
-        isAuthenticated: true,
-        initializing: false,
-      });
-    } else {
-      history.push('/auth');
-    }
-    // eslint-disable-next-line
-  }), []);
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      setIsUser(typeof user !== 'undefined');
+    });
+  }, [setIsUser]);
+
   return (
-    authState.initializing ? <LoadingPage height="100vh" /> : (
-      <Route
-        {...rest}
-      />
-    )
+    <Route
+      path={path}
+      exact
+      render={(props) => {
+        if (isUser) {
+          return render(props);
+        }
+        toast({
+          status: 'error',
+          title: 'Please Log In First!',
+        });
+        return <Redirect to="/" />;
+      }}
+    />
   );
 };
 

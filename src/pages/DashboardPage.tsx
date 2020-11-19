@@ -3,7 +3,7 @@ import React from 'react';
 import CommunityWidgets from '../organisms/CommunityWidgets';
 import UserWidgets from '../organisms/UserWidgets';
 import NavbarContainer from '../atoms/DefaultContainer';
-import SectionCallout from '../organisms/SectionCallout';
+import DashboardCallout from '../organisms/DashboardCallout';
 
 const DashboardPage: React.FC = () => (
   <Box>
@@ -11,7 +11,7 @@ const DashboardPage: React.FC = () => (
       <UserWidgets />
       <CommunityWidgets />
     </NavbarContainer>
-    <SectionCallout />
+    <DashboardCallout />
   </Box>
 );
 

@@ -31,3 +31,8 @@ export const isWidgetErrorsState = atom<boolean>({
   key: 'isWidgetErrors',
   default: false,
 });
+
+export const signupWidgetState = atom<boolean>({
+  key: 'signupWidgetState',
+  default: false,
+});

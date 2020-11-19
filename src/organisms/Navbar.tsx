@@ -19,6 +19,7 @@ import { getCurrentUser } from '../services/auth.services';
 import { User } from '../interfaces/user.interface';
 import { userState } from '../recoil/atoms';
 import NavbarContainer from '../atoms/DefaultContainer';
+import AuthModal from '../molecules/AuthModal';
 
 const Navbar: React.FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -93,6 +94,8 @@ const Navbar: React.FC = () => {
           </a>
 
         </Flex>
+
+        <AuthModal />
 
         <Modal isOpen={isOpen} onClose={onClose} size="xl">
           <ModalOverlay />

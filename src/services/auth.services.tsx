@@ -24,29 +24,35 @@ const createUserInDb = (
     });
 });
 
-const authenticateUser = (): Promise<User> => new Promise(((resolve, reject) => {
-  auth.signInWithPopup(googleAuthProvider).then((result) => {
-    if (result.user) {
-      const userFromAuth: firebase.User = result.user;
-
-      if (userFromAuth?.email === null) {
-        reject(Error('No Email!'));
-      } else {
-        const {
-          email, photoURL, displayName, uid,
-        } = userFromAuth;
-        userCollection.doc(uid).get().then((doc) => {
-          if (doc.exists) {
-            resolve(doc.data() as User);
-          }
-          createUserInDb(uid, email, displayName, photoURL).then((user) => resolve(user));
-        });
-      }
+const authenticateUser = (): Promise<boolean> => new Promise(((resolve, reject) => {
+  auth.onAuthStateChanged((user) => {
+    if (user) {
+      resolve();
     } else {
-      reject(Error('No User!'));
+      auth.signInWithPopup(googleAuthProvider).then((result) => {
+        if (result.user) {
+          const userFromAuth: firebase.User = result.user;
+
+          if (userFromAuth?.email === null) {
+            reject(Error('No Email!'));
+          } else {
+            const {
+              email, photoURL, displayName, uid,
+            } = userFromAuth;
+            userCollection.doc(uid).get().then((doc) => {
+              if (doc.exists) {
+                resolve(false);
+              }
+              createUserInDb(uid, email, displayName, photoURL).then(() => resolve(true));
+            });
+          }
+        } else {
+          reject(Error('No User!'));
+        }
+      }).catch((error) => {
+        reject(error.message);
+      });
     }
-  }).catch((error) => {
-    reject(error.message);
   });
 }));
 

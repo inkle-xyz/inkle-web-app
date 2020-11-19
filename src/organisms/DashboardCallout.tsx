@@ -4,7 +4,7 @@ import {
 } from '@chakra-ui/react';
 import NavbarContainer from '../atoms/DefaultContainer';
 
-const SectionCallout: React.FC = () => (
+const DashboardCallout: React.FC = () => (
   <Box w="100%" bgColor="gray.100">
     <NavbarContainer>
       <Box py="4rem">
@@ -46,4 +46,4 @@ const SectionCallout: React.FC = () => (
   </Box>
 );
 
-export default SectionCallout;
+export default DashboardCallout;
