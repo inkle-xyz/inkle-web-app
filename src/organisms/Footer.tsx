@@ -18,6 +18,9 @@ const Footer: React.FC = () => (
               <Link mx={3} as={BrowserLink} to="/">
                 Home
               </Link>
+              <Link mx={3} as={BrowserLink} to="/">
+                Tutorial
+              </Link>
               <Link
                 mx={3}
                 href="https://www.notion.so/caelinsutch/Inkle-TOS-dd2fab9843bd407498c003e824bb9a9a"
@@ -36,6 +39,14 @@ const Footer: React.FC = () => (
               </Link>
             </Flex>
             <Flex justifyContent="center" mt={2}>
+              <Link
+                mx={3}
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://www.notion.so/caelinsutch/Hey-There-e1f6b9bffc404c8083a20618a591d8e3"
+              >
+                About
+              </Link>
               <Link
                 mx={3}
                 target="_blank"

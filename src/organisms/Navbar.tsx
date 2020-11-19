@@ -73,6 +73,14 @@ const Navbar: React.FC = () => {
           <Link as={RouterLink} to="/welcome" mr={4}>
             Tutorial
           </Link>
+          <Link
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://www.notion.so/caelinsutch/Hey-There-e1f6b9bffc404c8083a20618a591d8e3"
+            mr={4}
+          >
+            About
+          </Link>
           <a href="https://twitter.com/inkle_xyz" target="_blank" rel="noopener noreferrer">
             <Button
               variant="outline"

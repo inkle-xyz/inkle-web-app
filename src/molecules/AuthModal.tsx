@@ -3,6 +3,7 @@ import {
   Button,
   Center,
   Heading,
+  Link,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -17,7 +18,7 @@ import { authenticateUser } from '../services/auth.services';
 import GoogleColorIcon from '../atoms/GoogleColorIcon';
 import { signupWidgetState, userState } from '../recoil/atoms';
 
-const AuthModal = () => {
+const AuthModal: React.FC = () => {
   const [isSignupWidgetOpen, setSignupWidgetStateOpen] = useRecoilState(signupWidgetState);
   const setUserState = useSetRecoilState(userState);
   const history = useHistory();
@@ -34,8 +35,20 @@ const AuthModal = () => {
               Sign Up
             </Heading>
           </Center>
-          <Text textAlign="center" mb="2rem">
+          <Text textAlign="center" mb=".5rem">
             Ready to make some awesome widgets?
+          </Text>
+          <Text textAlign="center" mb="1.7rem" fontSize="xs" color="gray.400">
+            By authenticating you agree to our
+            {' '}
+            <Link
+              href="https://www.notion.so/caelinsutch/Inkle-TOS-dd2fab9843bd407498c003e824bb9a9a"
+              target="_blank"
+              rel="noopener noreferrer"
+              textDecoration="underline"
+            >
+              Terms of Service
+            </Link>
           </Text>
           <ModalFooter>
             <Button

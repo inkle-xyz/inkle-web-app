@@ -220,7 +220,7 @@ const WidgetPageLeft: React.FC = () => {
       }
     }
   }, [setState, originalSelectedWidget, selectedWidget, toast, state.toastId, editedCode,
-    currentUser, setCurrentUser, state.hasInitialized]);
+    currentUser, setCurrentUser, state.hasInitialized, isUsersWidget]);
 
   return (
     <Box my="4rem">
