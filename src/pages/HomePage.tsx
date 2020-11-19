@@ -15,6 +15,7 @@ import Quotes from '../assets/quotes.jpg';
 import CommunityWidgets from '../organisms/CommunityWidgets';
 import Navbar from '../organisms/Navbar';
 import Footer from '../organisms/Footer';
+import EditorImage from '../assets/editor.png';
 
 const HomePage: React.FC = () => {
   const setSignupWidgetState = useSetRecoilState(signupWidgetState);
@@ -56,6 +57,12 @@ const HomePage: React.FC = () => {
                 ) : <Link to="/dashboard"><Button>Go to Dashboard</Button></Link>
             }
           </Flex>
+        </Center>
+        <Center mt="4rem">
+          <Box textAlign="center">
+            <Image src={EditorImage} boxShadow="lg" />
+            <Text mt={2} color="gray.400">Fully Fledged Widget Editor</Text>
+          </Box>
         </Center>
         <Heading
           color="gray.500"
