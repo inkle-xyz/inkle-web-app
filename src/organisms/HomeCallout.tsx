@@ -40,7 +40,7 @@ const HomeCallout: React.FC<Props> = ({ onSignUpClick, isUser }) => (
             }}
           >
             {
-              isUser
+              !isUser
                 ? <Link to="/dashboard">Go to Dashboard</Link> : (
                   'Sign Up Today'
                 )
