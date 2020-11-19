@@ -26,9 +26,8 @@ import {
 } from '@chakra-ui/react';
 import React, { ReactText, useEffect, useState } from 'react';
 import { FiCopy } from 'react-icons/all';
-import { LiveEditor, LiveError } from 'react-live';
+import { LiveEditor } from 'react-live';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import styled from '@emotion/styled';
 import { useHistory } from 'react-router-dom';
 import WidgetTitleEditable from '../molecules/WidgetTitleEditable';
 import WidgetFormGroup from '../atoms/WidgetFormGroup';
@@ -46,17 +45,6 @@ import { cloneWidget, deleteWidget, saveWidget } from '../services/widget.servic
 import { deepEqual } from '../utils/utils';
 import { isUsersWidgetState } from '../recoil/selectors';
 import { getCurrentUser } from '../services/auth.services';
-
-const StyledError = styled(LiveError)`
-  display: block;
-  padding: .5rem;
-  background-color: #ef4949;
-  color: white;
-  white-space: pre-wrap;
-  text-align: left;
-  font-size: 0.6em;
-  font-family: 'Source Code Pro', monospace;
-`;
 
 type WidgetPageLeftState = {
   saveButtonLoading: boolean;
@@ -442,7 +430,6 @@ const WidgetPageLeft: React.FC = () => {
                       .
                       Access is also given to the `styled` React library to make styled components!
                     </Text>
-                    <StyledError />
 
                     <LiveEditor onChangeCapture={(e) => {
                       // eslint-disable-next-line @typescript-eslint/ban-ts-comment

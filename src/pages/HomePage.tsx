@@ -2,13 +2,17 @@ import React from 'react';
 import {
   Button,
   Center,
-  Container, Flex, Heading, Text, Box,
+  Container, Flex, Heading, Text, Box, Image, SimpleGrid,
 } from '@chakra-ui/react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { Link } from 'react-router-dom';
 import GoogleColorIcon from '../atoms/GoogleColorIcon';
 import HomeCallout from '../organisms/HomeCallout';
 import { signupWidgetState, userState } from '../recoil/atoms';
+import Clock from '../assets/clock.jpg';
+import LifeProgress from '../assets/life-progress.jpg';
+import Quotes from '../assets/quotes.jpg';
+import CommunityWidgets from '../organisms/CommunityWidgets';
 
 const HomePage: React.FC = () => {
   const setSignupWidgetState = useSetRecoilState(signupWidgetState);
@@ -52,6 +56,21 @@ const HomePage: React.FC = () => {
         <Heading color="gray.500" size="md" as="h2" textAlign="center" lineHeight="56px" mt="5rem">
           Some Awesome Widgets Created on Our Platform
         </Heading>
+        <SimpleGrid columns={{ sm: 1, md: 3 }} spacing={10} my={10}>
+          <Box textAlign="center">
+            <Image src={Clock} boxShadow="md" />
+            <Text mt={2} color="gray.400">Simple Clock</Text>
+          </Box>
+          <Box textAlign="center">
+            <Image src={LifeProgress} boxShadow="md" />
+            <Text mt={2} color="gray.400">Life Tracker</Text>
+          </Box>
+          <Box textAlign="center">
+            <Image src={Quotes} boxShadow="md" />
+            <Text mt={2} color="gray.400">Quote of the Day</Text>
+          </Box>
+        </SimpleGrid>
+        <CommunityWidgets forHome />
       </Container>
       <HomeCallout onSignUpClick={() => setSignupWidgetState(true)} isUser={typeof user !== 'undefined'} />
 

@@ -7,7 +7,7 @@ import { Widget } from '../interfaces/widget.interface';
 
 type WidgetCardProps = {
   widget: Widget;
-  onClone: (widget: Widget) => void
+  onClone?: (widget: Widget) => void
 }
 
 const WidgetCard: React.FC<WidgetCardProps> = ({

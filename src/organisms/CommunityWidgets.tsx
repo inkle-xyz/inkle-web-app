@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Box, Center, SimpleGrid, Spinner, useToast,
+  Box, Center, Heading, SimpleGrid, Spinner, useToast,
 } from '@chakra-ui/react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { Widget } from '../interfaces/widget.interface';
@@ -16,7 +16,11 @@ type CommunityWidgetsState = {
   isLoading: boolean;
 }
 
-const CommunityWidgets: React.FC = () => {
+type Props = {
+  forHome?: boolean;
+}
+
+const CommunityWidgets: React.FC<Props> = ({ forHome }) => {
   const [state, setState] = useState<CommunityWidgetsState>({
     widgets: [],
     startAt: 1,
@@ -58,9 +62,19 @@ const CommunityWidgets: React.FC = () => {
   return (
     <Box my="4rem">
       <SearchSortBar
-        title="Featured Community Widgets 🌱"
+        title={!forHome
+          ? 'Featured Community Widgets 🌱' : ''}
         options={['By Name']}
       />
+      {
+        forHome ? (
+          <Heading as="h3" size="md" whiteSpace="nowrap" textAlign="center" mr={4} mb={1}>
+            Featured Community Widgets
+            <span role="img" aria-label="Happy Face Emoji">🌱</span>
+          </Heading>
+        )
+          : <Box />
+      }
       { state.isLoading
         ? (
           <Center h="100%">
@@ -74,13 +88,15 @@ const CommunityWidgets: React.FC = () => {
           </Center>
         )
         : (
-          <SimpleGrid columns={{ sm: 1, md: 3 }} spacing={10} mt={10}>
+          <SimpleGrid columns={forHome ? { sm: 1, md: 2 } : { sm: 1, md: 3 }} spacing={10} mt={10}>
             {
             state.widgets
-              .filter((widget) => widget.author !== user?.id)
+              .filter((widget) => (forHome
+                ? true
+                : widget.author !== user?.id))
               .map((widget) => (
                 <WidgetCard
-                  onClone={onWidgetClone}
+                  onClone={!forHome ? onWidgetClone : undefined}
                   key={widget.id}
                   widget={widget}
                 />
