@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Box, Center, SimpleGrid, Spinner, useToast,
+  Box, Center, Spinner, useToast,
 } from '@chakra-ui/react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import SearchSortBar from './SearchSortBar';
@@ -9,6 +9,7 @@ import EmptyWidgetCard from '../molecules/EmptyWidgetCard';
 import { cloneWidget, createNewWidget, getUsersWidgets } from '../services/widget.services';
 import { Widget } from '../interfaces/widget.interface';
 import { userState, usersWidgetsState } from '../recoil/atoms';
+import WidgetGrid from '../atoms/WidgetGrid';
 
 type UserWidgetsState = {
   filteredUserWidgets: Widget[];
@@ -106,7 +107,7 @@ const UserWidgets: React.FC = () => {
           </Center>
         )
         : (
-          <SimpleGrid columns={{ sm: 1, md: 3 }} spacing={10} mt={10} mH="175px">
+          <WidgetGrid>
             {
             getWidgetsToRender()
               .map((widget) => (
@@ -118,7 +119,7 @@ const UserWidgets: React.FC = () => {
               ))
           }
             <EmptyWidgetCard onWidgetCreate={onWidgetCreate} />
-          </SimpleGrid>
+          </WidgetGrid>
         )}
     </Box>
   );

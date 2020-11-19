@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import DashboardPage from './pages/DashboardPage';
-import NavbarContainer from './containers/DashboardContainer';
 import WidgetPage from './pages/WidgetPage';
 import ProtectedRoute from './routes/protected-route';
 import WidgetForNotionPage from './pages/WidgetForNotionPage';
@@ -31,6 +30,13 @@ const App: React.FC = () => {
           ? <LoadingPage />
           : (
             <>
+              <Route path="/welcome" component={WelcomePage} exact />
+              <ProtectedRoute
+                path="/dashboard"
+                render={() => <DashboardPage />}
+                isAuthenticated={user !== null}
+              />
+              <Route path="/" component={HomePage} exact />
               <Route path="/w/:id" render={(props) => <WidgetForNotionPage id={props.match.params.id} />} />
               <ProtectedRoute
                 path="/widget/:id"
@@ -39,16 +45,6 @@ const App: React.FC = () => {
               (props) => (<WidgetPage id={props.match.params.id} />)
             }
               />
-              <NavbarContainer>
-                <Route path="/welcome" component={WelcomePage} exact />
-                <ProtectedRoute
-                  path="/dashboard"
-                  render={() => <DashboardPage />}
-                  isAuthenticated={user !== null}
-                />
-                <Route path="/" component={HomePage} exact />
-              </NavbarContainer>
-
             </>
           )
       }

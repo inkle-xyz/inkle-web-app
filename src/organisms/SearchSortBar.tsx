@@ -33,12 +33,14 @@ const SearchSortBar: React.FC<Props> = ({
     >
       <Flex
         alignItems="center"
+        display={{ base: 'block', md: 'flex' }}
+        mt={{ base: '1rem', md: 0 }}
       >
-        <Heading as="h3" size="lg" whiteSpace="nowrap" mr={4} mb={1}>{ title }</Heading>
+        <Heading as="h3" size="lg" whiteSpace={{ base: 'normal', md: 'nowrap' }} mr={4} mb={1}>{ title }</Heading>
         {
           searchHandler
             ? (
-              <InputGroup>
+              <InputGroup mt={{ base: '1rem', md: 0 }}>
                 <InputLeftElement pointerEvents="none">
                   <SearchIcon color="gray.300" />
                 </InputLeftElement>

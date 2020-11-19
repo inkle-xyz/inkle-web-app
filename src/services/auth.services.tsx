@@ -24,7 +24,7 @@ const createUserInDb = (
     });
 });
 
-const authenticateUser = (): Promise<boolean> => new Promise(((resolve, reject) => {
+const authenticateUser = (): Promise<User> => new Promise(((resolve, reject) => {
   auth.onAuthStateChanged((user) => {
     if (user) {
       resolve();
@@ -41,9 +41,9 @@ const authenticateUser = (): Promise<boolean> => new Promise(((resolve, reject) 
             } = userFromAuth;
             userCollection.doc(uid).get().then((doc) => {
               if (doc.exists) {
-                resolve(false);
+                resolve(doc.data() as User);
               }
-              createUserInDb(uid, email, displayName, photoURL).then(() => resolve(true));
+              createUserInDb(uid, email, displayName, photoURL).then((user) => resolve(user));
             });
           }
         } else {

@@ -7,7 +7,7 @@ import {
   useDisclosure,
   Heading,
   Center,
-  ModalFooter,
+  ModalFooter, Container,
 } from '@chakra-ui/react';
 import React from 'react';
 import { Link as RouterLink, useHistory } from 'react-router-dom';
@@ -16,7 +16,6 @@ import { AiOutlineTwitter } from 'react-icons/all';
 import LogoIcon from '../assets/logo-icon.svg';
 import { auth } from '../firebase.config';
 import { userState } from '../recoil/atoms';
-import NavbarContainer from '../atoms/DefaultContainer';
 import AuthModal from '../molecules/AuthModal';
 
 const Navbar: React.FC = () => {
@@ -25,19 +24,22 @@ const Navbar: React.FC = () => {
   const history = useHistory();
 
   return (
-    <NavbarContainer>
-      <Flex py={4}>
-        <Box>
+    <Container maxW="1440px" px={{ base: '0', md: '4rem' }}>
+      <Flex py={4} overflowY="auto">
+        <Box display={{ base: 'none', md: 'block' }}>
           <RouterLink to="/">
-            <Image src={LogoIcon} />
+            <Image src={LogoIcon} w="50px" />
           </RouterLink>
         </Box>
-        <Spacer />
-        <Flex alignItems="center" color="gray.600" fontWeight="400">
+        <Spacer display={{ base: 'none', md: 'block' }} />
+        <Flex alignItems="center" color="gray.600" fontWeight="400" px={{ base: '1rem', md: 0 }}>
+          <RouterLink to="/">
+            <Image src={LogoIcon} w="50px" display={{ base: 'block', md: 'none' }} mr={2} />
+          </RouterLink>
           {user?.displayName
             ? (
               <>
-                <Text mr={4}>
+                <Text mr={4} display={{ base: 'none', md: 'block' }}>
                   Hello,
                   {' '}
                   {user.displayName}
@@ -127,7 +129,7 @@ const Navbar: React.FC = () => {
           </ModalContent>
         </Modal>
       </Flex>
-    </NavbarContainer>
+    </Container>
   );
 };
 

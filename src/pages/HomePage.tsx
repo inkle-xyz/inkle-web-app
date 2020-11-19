@@ -13,6 +13,7 @@ import Clock from '../assets/clock.jpg';
 import LifeProgress from '../assets/life-progress.jpg';
 import Quotes from '../assets/quotes.jpg';
 import CommunityWidgets from '../organisms/CommunityWidgets';
+import Navbar from '../organisms/Navbar';
 
 const HomePage: React.FC = () => {
   const setSignupWidgetState = useSetRecoilState(signupWidgetState);
@@ -20,8 +21,10 @@ const HomePage: React.FC = () => {
 
   return (
     <Box>
+      <Navbar />
+
       <Container maxW="800px" px="4rem" mt="5rem" w="100%">
-        <Heading color="gray.700" size="xl" as="h1" textAlign="center" lineHeight="56px">
+        <Heading color="gray.700" size="xl" as="h1" textAlign="center" lineHeight={{ base: '40px', md: '56px' }}>
           Beautify Your Notion
           <br />
           With Custom Widgets
@@ -53,7 +56,14 @@ const HomePage: React.FC = () => {
             }
           </Flex>
         </Center>
-        <Heading color="gray.500" size="md" as="h2" textAlign="center" lineHeight="56px" mt="5rem">
+        <Heading
+          color="gray.500"
+          size="md"
+          as="h2"
+          textAlign="center"
+          lineHeight={{ base: '40px', md: '56px' }}
+          mt="5rem"
+        >
           Some Awesome Widgets Created on Our Platform
         </Heading>
         <SimpleGrid columns={{ sm: 1, md: 3 }} spacing={10} my={10}>

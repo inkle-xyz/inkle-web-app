@@ -11,14 +11,15 @@ import {
   ModalOverlay,
   Text,
 } from '@chakra-ui/react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { useHistory } from 'react-router-dom';
 import { authenticateUser } from '../services/auth.services';
 import GoogleColorIcon from '../atoms/GoogleColorIcon';
-import { signupWidgetState } from '../recoil/atoms';
+import { signupWidgetState, userState } from '../recoil/atoms';
 
 const AuthModal = () => {
   const [isSignupWidgetOpen, setSignupWidgetStateOpen] = useRecoilState(signupWidgetState);
+  const setUserState = useSetRecoilState(userState);
   const history = useHistory();
 
   return (
@@ -42,6 +43,7 @@ const AuthModal = () => {
               size="lg"
               onClick={() => authenticateUser().then((newUser) => {
                 setSignupWidgetStateOpen(false);
+                setUserState(newUser);
                 if (newUser) {
                   history.push('/welcome');
                 } else {

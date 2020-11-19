@@ -3,8 +3,12 @@ import Navbar from '../organisms/Navbar';
 
 const DashboardContainer: React.FC = ({ children }) => (
   <>
-    <Navbar />
-    { children }
+    { children
+      ? (
+        <>
+          { children }
+        </>
+      ) : <div />}
   </>
 );
 

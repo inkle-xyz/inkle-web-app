@@ -1,6 +1,6 @@
 import {
   Alert,
-  Box, Center, Image, SimpleGrid,
+  Box, Center, Flex, Heading, IconButton, Image, SimpleGrid, Text,
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { LivePreview, LiveProvider } from 'react-live';
@@ -9,6 +9,7 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 import { useHistory } from 'react-router-dom';
 import { Resizable } from 're-resizable';
 import styled from '@emotion/styled';
+import { ArrowBackIcon } from '@chakra-ui/icons';
 import LogoIcon from '../assets/logo-icon.svg';
 import WidgetPageLeft from '../organisms/WidgetPageLeft';
 import { originalSelectedWidgetState, selectedWidgetState, userWidgetCodeState } from '../recoil/atoms';
@@ -71,17 +72,57 @@ const WidgetPage: React.FC<WidgetPageProps> = ({ id }) => {
         authorName: selectedWidget.authorName,
       }}
     >
-      <SimpleGrid columns={2} h="100vh">
-        <Box w="100%" overflow="scroll">
-          <Box width="500px" mx="auto">
+      <SimpleGrid columns={{ sm: 1, lg: 2 }} h="100vh" display={{ base: 'block', md: 'grid' }}>
+        <Box w="100%" overflowY="scroll">
+          <Box width="500px" mx="auto" display={{ base: 'none', md: 'block' }}>
             <Image src={LogoIcon} mt={5} />
             <WidgetPageLeft />
+          </Box>
+          <Box display={{ base: 'block', md: 'none' }} py="2rem" px="3rem">
+            <Flex alignItems="center">
+              <IconButton
+                aria-label="Icon button"
+                variant="ghost"
+                onClick={() => {
+                  setSelectedWidget(null);
+                  history.goBack();
+                }}
+                mr={4}
+                icon={<ArrowBackIcon w={8} h={8} />}
+              />
+              <Heading
+                fontSize="3xl"
+                fontWeight="bold"
+                mb={2}
+              >
+                {selectedWidget?.name}
+              </Heading>
+            </Flex>
+            <Text color="gray.500" fontSize="sm" mt={2}>
+              Made By
+              {' '}
+              {selectedWidget?.authorName}
+            </Text>
+            <Text mt={2}>
+              {selectedWidget.description}
+            </Text>
+            <Text color="gray.500" fontSize="sm" mt={2} fontStyle="italic">
+              Sorry, we don't support editing widgets on mobile yet :(
+            </Text>
           </Box>
         </Box>
         <Box w="100%" bgColor="gray.200" h="100%">
           <Center h="100%">
             <Box>
-              <Alert status="info" mb={4} textAlign="center" variant="solid" w="450px" mx="auto">
+              <Alert
+                status="info"
+                display={{ base: 'none', md: 'block' }}
+                mb={4}
+                textAlign="center"
+                variant="solid"
+                w="450px"
+                mx="auto"
+              >
                 <span role="img" aria-label="Lightbulb Emoji">💡</span>
                 {' '}
                 Drag the border to preview this widget in different sizes

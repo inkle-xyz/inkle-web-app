@@ -88,7 +88,7 @@ const CommunityWidgets: React.FC<Props> = ({ forHome }) => {
           </Center>
         )
         : (
-          <SimpleGrid columns={forHome ? { sm: 1, md: 2 } : { sm: 1, md: 3 }} spacing={10} mt={10}>
+          <SimpleGrid columns={forHome ? { sm: 1, md: 2 } : { sm: 1, md: 2, lg: 3 }} spacing={10} mt={10}>
             {
             state.widgets
               .filter((widget) => (forHome
