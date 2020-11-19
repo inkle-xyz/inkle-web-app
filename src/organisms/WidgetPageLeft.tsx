@@ -73,7 +73,7 @@ const WidgetPageLeft: React.FC = () => {
   const isWidgetErrors = useRecoilValue(isWidgetErrorsState);
   const [currentUser, setCurrentUser] = useRecoilState(userState);
   const linkForNotion = `https://inkle.xyz/w/${selectedWidget?.id}`;
-  const { onCopy } = useClipboard(linkForNotion);
+  const { onCopy, hasCopied } = useClipboard(linkForNotion);
   const isUsersWidget = useRecoilValue(isUsersWidgetState);
 
   const [state, setState] = useState<WidgetPageLeftState>({
@@ -252,7 +252,19 @@ const WidgetPageLeft: React.FC = () => {
           mr={4}
           icon={<ArrowBackIcon w={8} h={8} />}
         />
-        <WidgetTitleEditable />
+        {
+          isUsersWidget
+            ? <WidgetTitleEditable /> : (
+              <Heading
+                fontSize="3xl"
+                fontWeight="bold"
+                mb={2}
+              >
+                {selectedWidget?.name}
+              </Heading>
+            )
+
+        }
       </Flex>
       {
             isUsersWidget && selectedWidget
@@ -370,8 +382,12 @@ const WidgetPageLeft: React.FC = () => {
                         fontWeight="semibold"
                         isDisabled
                       />
-                      <InputRightAddon bgColor="gray.700" color="white" onClick={onCopy}>
+                      <InputRightAddon bgColor="gray.700" color="white" onClick={onCopy} cursor="pointer">
                         <FiCopy />
+                        <Box mr={2} />
+                        {
+                          hasCopied ? 'Copied' : 'Copy'
+                        }
                       </InputRightAddon>
                     </InputGroup>
                   </WidgetFormGroup>
