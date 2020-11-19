@@ -14,6 +14,7 @@ import LifeProgress from '../assets/life-progress.jpg';
 import Quotes from '../assets/quotes.jpg';
 import CommunityWidgets from '../organisms/CommunityWidgets';
 import Navbar from '../organisms/Navbar';
+import Footer from '../organisms/Footer';
 
 const HomePage: React.FC = () => {
   const setSignupWidgetState = useSetRecoilState(signupWidgetState);
@@ -83,6 +84,8 @@ const HomePage: React.FC = () => {
         <CommunityWidgets forHome />
       </Container>
       <HomeCallout onSignUpClick={() => setSignupWidgetState(true)} isUser={typeof user !== 'undefined'} />
+
+      <Footer />
 
     </Box>
   );

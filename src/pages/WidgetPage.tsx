@@ -74,7 +74,7 @@ const WidgetPage: React.FC<WidgetPageProps> = ({ id }) => {
     >
       <SimpleGrid columns={{ sm: 1, lg: 2 }} h="100vh" display={{ base: 'block', md: 'grid' }}>
         <Box w="100%" overflowY="scroll">
-          <Box width="500px" mx="auto" display={{ base: 'none', md: 'block' }}>
+          <Box width="500px" mx="auto" px="1rem" display={{ base: 'none', md: 'block' }}>
             <Image src={LogoIcon} mt={5} />
             <WidgetPageLeft />
           </Box>
@@ -107,6 +107,7 @@ const WidgetPage: React.FC<WidgetPageProps> = ({ id }) => {
               {selectedWidget.description}
             </Text>
             <Text color="gray.500" fontSize="sm" mt={2} fontStyle="italic">
+              {/* eslint-disable-next-line react/no-unescaped-entities */}
               Sorry, we don't support editing widgets on mobile yet :(
             </Text>
           </Box>

@@ -5,6 +5,7 @@ import UserWidgets from '../organisms/UserWidgets';
 import NavbarContainer from '../atoms/DefaultContainer';
 import DashboardCallout from '../organisms/DashboardCallout';
 import Navbar from '../organisms/Navbar';
+import Footer from '../organisms/Footer';
 
 const DashboardPage: React.FC = () => (
   <Box>
@@ -15,6 +16,8 @@ const DashboardPage: React.FC = () => (
       <CommunityWidgets />
     </NavbarContainer>
     <DashboardCallout />
+    <Footer />
+
   </Box>
 );
 

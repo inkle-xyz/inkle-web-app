@@ -7,8 +7,9 @@ import step1 from '../assets/step-1.gif';
 import step2 from '../assets/step-2.gif';
 import step3 from '../assets/step-3.gif';
 import Navbar from '../organisms/Navbar';
+import Footer from '../organisms/Footer';
 
-const WelcomePage = () => (
+const WelcomePage: React.FC = () => (
   <>
     <Navbar />
     <Container maxW="800px" px="4rem" mt="5rem">
@@ -58,6 +59,8 @@ const WelcomePage = () => (
         </Button>
       </a>
     </Container>
+    <Footer />
+
   </>
 
 );
