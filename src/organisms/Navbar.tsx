@@ -69,7 +69,11 @@ const Navbar: React.FC = () => {
                     <MenuItem onClick={onOpen}>
                       Account Information
                     </MenuItem>
-                    <MenuItem onClick={() => auth.signOut()}>
+                    <MenuItem onClick={() => {
+                      auth.signOut();
+                      setUserState(null);
+                    }}
+                    >
                       Sign Out
                     </MenuItem>
                   </MenuList>
