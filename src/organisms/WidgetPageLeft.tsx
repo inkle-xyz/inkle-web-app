@@ -188,7 +188,7 @@ const WidgetPageLeft: React.FC = () => {
     // console.log('widget', deepEqual(selectedWidget, originalSelectedWidget));
     // console.log('widgetCode', selectedWidget?.code !== originalSelectedWidget?.code);
     if (!deepEqual(selectedWidget, originalSelectedWidget) || editedCode !== originalSelectedWidget?.code) {
-      if (state.toastId === '') {
+      if (state.toastId === '' && isUsersWidget) {
         const t = toast({
           status: 'warning',
           title: 'Unsaved changes',
@@ -453,27 +453,44 @@ const WidgetPageLeft: React.FC = () => {
                     {selectedWidget?.description}
                   </Text>
                   <Box mt={2} />
-                  <Text fontSize="sm" color="gray.500">
-                    Actions
-                  </Text>
-                  <Flex mt={2}>
-                    <Button
-                      colorScheme="teal"
-                      onClick={() => {
-                        if (currentUser && selectedWidget) {
-                          cloneWidget(currentUser, selectedWidget).then(() => {
-                            toast({
-                              status: 'success',
-                              title: 'Widget cloned!',
-                            });
-                            history.push('/dashboard');
-                          });
-                        }
-                      }}
-                    >
-                      Clone
-                    </Button>
-                  </Flex>
+                  <WidgetFormGroup title="Variables">
+                    {
+                      selectedWidget
+                        ? selectedWidget.variables.length !== 0
+                          ? selectedWidget.variables.map((widgetVariable) => (
+                            <WidgetVariableValueInput
+                              widgetVariable={widgetVariable}
+                              key={`default-value ${widgetVariable.id}`}
+                            />
+                          )) : <Text mt={2} color="gray.500">No Variables</Text> : <div />
+                    }
+                  </WidgetFormGroup>
+                  <Box mt={2} />
+                  {
+                    currentUser
+                      ? (
+                        <WidgetFormGroup title="Actions">
+                          <Flex mt={2}>
+                            <Button
+                              colorScheme="teal"
+                              onClick={() => {
+                                if (currentUser && selectedWidget) {
+                                  cloneWidget(currentUser, selectedWidget).then(() => {
+                                    toast({
+                                      status: 'success',
+                                      title: 'Widget cloned!',
+                                    });
+                                    history.push('/dashboard');
+                                  });
+                                }
+                              }}
+                            >
+                              Clone
+                            </Button>
+                          </Flex>
+                        </WidgetFormGroup>
+                      ) : <div />
+                  }
                 </Box>
               )
           }

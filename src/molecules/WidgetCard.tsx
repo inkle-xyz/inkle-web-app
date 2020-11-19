@@ -25,7 +25,6 @@ const WidgetCard: React.FC<WidgetCardProps> = ({
 
   return (
     <Flex
-      cursor="pointer"
       borderRadius="lg"
       boxShadow="lg"
       flexDirection="column"
@@ -50,6 +49,10 @@ const WidgetCard: React.FC<WidgetCardProps> = ({
           lineHeight="tight"
           isTruncated
           size="md"
+          cursor="pointer"
+          _hover={{
+            textDecoration: 'underline',
+          }}
           onClick={() => onClick()}
         >
           {name}

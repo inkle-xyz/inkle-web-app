@@ -38,9 +38,8 @@ const App: React.FC = () => {
               />
               <Route path="/" component={HomePage} exact />
               <Route path="/w/:id" render={(props) => <WidgetForNotionPage id={props.match.params.id} />} />
-              <ProtectedRoute
+              <Route
                 path="/widget/:id"
-                isAuthenticated={user !== null}
                 render={
               (props) => (<WidgetPage id={props.match.params.id} />)
             }
