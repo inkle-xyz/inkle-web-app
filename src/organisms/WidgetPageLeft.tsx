@@ -373,30 +373,39 @@ const WidgetPageLeft: React.FC = () => {
                     </Flex>
                   </WidgetFormGroup>
                   <WidgetFormGroup title="Notion Link">
-                    <InputGroup mt={4}>
-                      <Input
-                        type="phone"
-                        borderLeftRadius="0"
-                        value={linkForNotion}
-                        color="black"
-                        fontWeight="semibold"
-                        isDisabled
-                      />
-                      <InputRightAddon bgColor="gray.700" color="white" onClick={onCopy} cursor="pointer">
-                        <FiCopy />
-                        <Box mr={2} />
-                        {
-                          hasCopied ? 'Copied' : 'Copy'
-                        }
-                      </InputRightAddon>
-                    </InputGroup>
+                    <Tooltip
+                      hasArrow
+                      label="Paste this link into notion and select embed from the dropdown to use this widget"
+                      aria-label="A Tooltip"
+                    >
+                      <InputGroup mt={4}>
+                        <Input
+                          type="phone"
+                          borderLeftRadius="0"
+                          value={linkForNotion}
+                          color="black"
+                          fontWeight="semibold"
+                          isDisabled
+                        />
+                        <InputRightAddon bgColor="gray.700" color="white" onClick={onCopy} cursor="pointer">
+                          <FiCopy />
+                          <Box mr={2} />
+                          {
+                            hasCopied ? 'Copied' : 'Copy'
+                          }
+                        </InputRightAddon>
+                      </InputGroup>
+                    </Tooltip>
                   </WidgetFormGroup>
 
                   <Divider my={5} />
 
                   <Heading as="h3" size="md" mb={2}>Advanced</Heading>
 
-                  <WidgetFormGroup title="Edit Widgets">
+                  <WidgetFormGroup title="Edit Variables">
+                    <Text color="gray.500" mb={4}>
+                      Edit which variables are injected into the React component.
+                    </Text>
                     {
                     selectedWidget.variables.length !== 0
                       ? selectedWidget.variables.map(
@@ -421,7 +430,10 @@ const WidgetPageLeft: React.FC = () => {
 
                   <WidgetFormGroup title="Editor">
                     <Text color="gray.500" mb={4}>
-                      Edit the code that renders the component.
+                      The code below is a React component that renders the widget.
+                      You can access the widget variables with
+                      {' '}
+                      <code>variable_name</code>
                     </Text>
                     <StyledError />
 
