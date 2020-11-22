@@ -10,6 +10,7 @@ import WelcomePage from './pages/WelcomePage';
 import { userState } from './recoil/atoms';
 import { getCurrentUser } from './services/auth.services';
 import LoadingPage from './pages/LoadingPage';
+import AdminPage from './pages/AdminPage';
 
 const App: React.FC = () => {
   const [user, setUserState] = useRecoilState(userState);
@@ -35,6 +36,11 @@ const App: React.FC = () => {
                 path="/dashboard"
                 render={() => <DashboardPage />}
                 isAuthenticated={user !== null}
+              />
+              <ProtectedRoute
+                path="/admin"
+                render={() => <AdminPage />}
+                isAuthenticated={user?.isAdmin ?? false}
               />
               <Route path="/" component={HomePage} exact />
               <Route path="/w/:id" render={(props) => <WidgetForNotionPage id={props.match.params.id} />} />

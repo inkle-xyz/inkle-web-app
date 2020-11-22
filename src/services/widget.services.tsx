@@ -21,6 +21,16 @@ export const getUsersWidgets = (): Promise<Widget[]> => new Promise(((resolve, r
   });
 }));
 
+export const getPublishedWidgets = (): Promise<Widget[]> => new Promise((resolve) => {
+  widgetsCollection.where('isPublished', '==', true).get().then((querySnapshot) => {
+    const data: Widget[] = [];
+    querySnapshot.forEach((doc) => {
+      data.push({ ...doc.data(), id: doc.id } as Widget);
+    });
+    resolve(data);
+  });
+});
+
 export const getWidget = (widgetId: string): Promise<Widget> => new Promise<Widget>(((resolve, reject) => {
   widgetsCollection
     .doc(widgetId)

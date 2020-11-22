@@ -1,18 +1,18 @@
 import {
-  Box, Button, Flex, Heading, Tag, Text,
+  Box, Flex, Heading, Switch, Tag, Text,
 } from '@chakra-ui/react';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Widget } from '../interfaces/widget.interface';
 
-type WidgetCardProps = {
+type Props = {
   widget: Widget;
-  onClone?: (widget: Widget) => void
+  onToggleFeatured: (isFeatured: boolean) => void
 }
 
-const WidgetCard: React.FC<WidgetCardProps> = ({
+const AdminWidgetCard: React.FC<Props> = ({
   widget,
-  onClone,
+  onToggleFeatured,
 }) => {
   const history = useHistory();
   const {
@@ -61,17 +61,19 @@ const WidgetCard: React.FC<WidgetCardProps> = ({
           <Flex>
             {widget?.isFeatured && widget?.isPublished ? <Tag colorScheme="teal">Featured</Tag> : <Box />}
           </Flex>
-          {
-            onClone
-              ? (
-                <Button size="sm" onClick={() => onClone(widget)}>
-                  Copy Widget
-                </Button>
-              ) : <></>
-          }
+          <Box>
+            <Switch
+              defaultIsChecked={widget.isFeatured}
+              colorScheme="teal"
+              onChange={() => {
+                onToggleFeatured(!widget.isFeatured);
+              }}
+              id="email-alerts"
+            />
+          </Box>
         </Flex>
       </Box>
     </Flex>
   );
 };
-export default WidgetCard;
+export default AdminWidgetCard;
