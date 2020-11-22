@@ -77,6 +77,7 @@ const HomePage: React.FC = () => {
                           Sign up with
                         </Text>
                         <Button
+                          mt={2}
                           leftIcon={<GoogleColorIcon />}
                           onClick={() => setSignupWidgetState(true)}
                         >
