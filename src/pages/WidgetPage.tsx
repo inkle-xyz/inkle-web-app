@@ -10,7 +10,7 @@ import { useHistory } from 'react-router-dom';
 import { Resizable } from 're-resizable';
 import styled from '@emotion/styled';
 import { ArrowBackIcon } from '@chakra-ui/icons';
-import LogoIcon from '../assets/logo-icon.svg';
+import Logo from '../assets/logo-horizontal.svg';
 import WidgetPageLeft from '../organisms/WidgetPageLeft';
 import { originalSelectedWidgetState, selectedWidgetState, userWidgetCodeState } from '../recoil/atoms';
 import LoadingPage from './LoadingPage';
@@ -75,7 +75,7 @@ const WidgetPage: React.FC<WidgetPageProps> = ({ id }) => {
       <SimpleGrid columns={{ sm: 1, lg: 2 }} h="100vh" display={{ base: 'block', md: 'grid' }}>
         <Box w="100%" overflowY="scroll">
           <Box width="500px" mx="auto" px="1rem" display={{ base: 'none', md: 'block' }}>
-            <Image src={LogoIcon} mt={5} />
+            <Image src={Logo} mt={5} h="50px" />
             <WidgetPageLeft />
           </Box>
           <Box display={{ base: 'block', md: 'none' }} py="2rem" px="3rem">
