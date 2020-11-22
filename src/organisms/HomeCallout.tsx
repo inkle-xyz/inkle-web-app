@@ -4,13 +4,14 @@ import {
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import DefaultContainer from '../atoms/DefaultContainer';
+import { User } from '../interfaces/user.interface';
 
 type Props = {
   onSignUpClick: () => void;
-  isUser: boolean;
+  user: User | null;
 }
 
-const HomeCallout: React.FC<Props> = ({ onSignUpClick, isUser }) => (
+const HomeCallout: React.FC<Props> = ({ onSignUpClick, user }) => (
   <Box w="100%" bgColor="gray.100">
     <DefaultContainer maxW="1000px">
       <Box display={{ base: 'block', md: 'flex' }} alignItems="center" py="4rem">
@@ -35,13 +36,13 @@ const HomeCallout: React.FC<Props> = ({ onSignUpClick, isUser }) => (
               bgColor: 'yellow.500',
             }}
             onClick={() => {
-              if (!isUser) {
+              if (!user) {
                 onSignUpClick();
               }
             }}
           >
             {
-              !isUser
+              user
                 ? <Link to="/dashboard">Go to Dashboard</Link> : (
                   'Sign Up Today'
                 )

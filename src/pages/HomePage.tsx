@@ -99,7 +99,7 @@ const HomePage: React.FC = () => {
         </SimpleGrid>
         <CommunityWidgets forHome />
       </Container>
-      <HomeCallout onSignUpClick={() => setSignupWidgetState(true)} isUser={typeof user !== 'undefined'} />
+      <HomeCallout onSignUpClick={() => setSignupWidgetState(true)} user={user} />
 
       <Footer />
 
