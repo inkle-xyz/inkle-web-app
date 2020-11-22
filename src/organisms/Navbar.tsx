@@ -7,13 +7,14 @@ import {
   useDisclosure,
   Heading,
   Center,
-  ModalFooter, Container,
+  ModalFooter, Container, Icon,
 } from '@chakra-ui/react';
 import React from 'react';
 import { Link as RouterLink, useHistory } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { AiOutlineTwitter } from 'react-icons/all';
 import LogoIcon from '../assets/logo-icon.svg';
+import LogoHorizontal from '../assets/logo-horizontal.svg';
 import { auth } from '../firebase.config';
 import { userState } from '../recoil/atoms';
 import AuthModal from '../molecules/AuthModal';
@@ -28,7 +29,7 @@ const Navbar: React.FC = () => {
       <Flex py={4} overflowY="auto">
         <Box display={{ base: 'none', md: 'block' }}>
           <RouterLink to="/">
-            <Image src={LogoIcon} w="50px" />
+            <Image src={LogoHorizontal} w="150px" />
           </RouterLink>
         </Box>
         <Spacer display={{ base: 'none', md: 'block' }} />
@@ -39,12 +40,6 @@ const Navbar: React.FC = () => {
           {user?.displayName
             ? (
               <>
-                <Text mr={4} display={{ base: 'none', md: 'block' }}>
-                  Hello,
-                  {' '}
-                  {user.displayName}
-                  {' '}
-                </Text>
                 <Link as={RouterLink} to="/dashboard" mr={4}>
                   Dashboard
                 </Link>
@@ -80,16 +75,7 @@ const Navbar: React.FC = () => {
             About
           </Link>
           <a href="https://twitter.com/inkle_xyz" target="_blank" rel="noopener noreferrer">
-            <Button
-              variant="outline"
-              size="md"
-              border="2px solid"
-              borderColor="#00ACED"
-              color="#00ACED"
-              leftIcon={<AiOutlineTwitter />}
-            >
-              Get Updates
-            </Button>
+            <Icon as={AiOutlineTwitter} color="gray.400" />
           </a>
 
         </Flex>
