@@ -82,7 +82,6 @@ const HomePage: React.FC = () => {
           </Box>
         </Center>
         <Heading
-          color="gray.500"
           size="md"
           as="h2"
           textAlign="center"

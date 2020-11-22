@@ -44,8 +44,6 @@ const Navbar: React.FC = () => {
                   {' '}
                   {user.displayName}
                   {' '}
-                  😄
-                  {' '}
                 </Text>
                 <Link as={RouterLink} to="/dashboard" mr={4}>
                   Dashboard

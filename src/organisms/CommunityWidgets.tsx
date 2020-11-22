@@ -63,14 +63,14 @@ const CommunityWidgets: React.FC<Props> = ({ forHome }) => {
     <Box my="4rem">
       <SearchSortBar
         title={!forHome
-          ? 'Featured Community Widgets 🌱' : ''}
+          ? 'Featured Community Widgets 💡' : ''}
         options={['By Name']}
       />
       {
         forHome ? (
-          <Heading as="h3" size="md" whiteSpace="nowrap" textAlign="center" mr={4} mb={1}>
+          <Heading as="h2" size="md" whiteSpace="nowrap" textAlign="center" mr={4} mb={1}>
             Featured Community Widgets
-            <span role="img" aria-label="Happy Face Emoji">🌱</span>
+            <span role="img" aria-label="Happy Face Emoji">💡</span>
           </Heading>
         )
           : <Box />

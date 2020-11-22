@@ -6,7 +6,7 @@ import { Link as BrowserLink } from 'react-router-dom';
 import DefaultContainer from '../atoms/DefaultContainer';
 
 const Footer: React.FC = () => (
-  <Box w="100%" bgColor="gray.600" color="white">
+  <Box w="100%" bgColor="gray.800" color="white">
     <DefaultContainer maxW="1000px">
       <Flex display={{ base: 'block', md: 'flex' }} py="3rem" textAlign="center" w="100%">
         <Center w="100%">

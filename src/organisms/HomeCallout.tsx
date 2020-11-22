@@ -20,7 +20,7 @@ const HomeCallout: React.FC<Props> = ({ onSignUpClick, isUser }) => (
           <Heading color="gray.700" size="md">
             Ready to make your Notion awesome?
             {' '}
-            <span role="img" aria-label="Happy Face Emoji">✨</span>
+            <span role="img" aria-label="Happy Face Emoji">🔥</span>
           </Heading>
           <Text color="gray.600" fontSize="lg" mt={{ base: '1rem', md: '2rem' }}>
             Create your free account today.
