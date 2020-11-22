@@ -15,46 +15,50 @@ const createUserInDb = (
       email,
       displayName,
       photoUrl,
-      isShownWelcome: true,
       createdAt: new Date().toLocaleDateString(),
     }).then(() => {
       db.collection('users')
         .doc(id)
         .get()
-        .then((user) => resolve(user.data() as User));
+        .then((user) => {
+          resolve({ ...user.data(), id } as User);
+        });
     });
 });
 
 const authenticateUser = (): Promise<User> => new Promise(((resolve, reject) => {
-  auth.onAuthStateChanged((user) => {
-    if (user) {
-      userCollection.doc(user.uid).get().then((u) => resolve({ ...u.data(), id: user.uid } as User));
-    } else {
-      auth.signInWithPopup(googleAuthProvider).then((result) => {
-        if (result.user) {
-          const userFromAuth: firebase.User = result.user;
+  if (auth.currentUser) {
+    userCollection
+      .doc(auth.currentUser.uid)
+      .get().then((u) => resolve({ ...u.data(), id: auth?.currentUser?.uid } as User));
+  } else {
+    auth.signInWithPopup(googleAuthProvider).then((result) => {
+      if (result.user) {
+        const userFromAuth: firebase.User = result.user;
 
-          if (userFromAuth?.email === null) {
-            reject(Error('No Email!'));
-          } else {
-            const {
-              email, photoURL, displayName, uid,
-            } = userFromAuth;
-            userCollection.doc(uid).get().then((doc) => {
-              if (doc.exists) {
-                resolve({ ...doc.data(), id: uid } as User);
-              }
-              createUserInDb(uid, email, displayName, photoURL).then((u) => resolve(u));
-            });
-          }
+        if (userFromAuth?.email === null) {
+          reject(Error('No Email!'));
         } else {
-          reject(Error('No User!'));
+          const {
+            email, photoURL, displayName, uid,
+          } = userFromAuth;
+          userCollection.doc(uid).get().then((doc) => {
+            if (doc.data()) {
+              resolve({ ...doc.data(), id: uid } as User);
+            } else {
+              createUserInDb(uid, email, displayName, photoURL).then((u) => {
+                resolve({ ...u, isShownWelcome: true });
+              });
+            }
+          });
         }
-      }).catch((error) => {
-        reject(error.message);
-      });
-    }
-  });
+      } else {
+        reject(Error('No User!'));
+      }
+    }).catch((error) => {
+      reject(error.message);
+    });
+  }
 }));
 
 const getCurrentUser = (): Promise<User | null> => new Promise((resolve) => {

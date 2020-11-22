@@ -11,7 +11,6 @@ import Navbar from '../organisms/Navbar';
 import Footer from '../organisms/Footer';
 import { userState } from '../recoil/atoms';
 import { User } from '../interfaces/user.interface';
-import { updateUser } from '../services/auth.services';
 
 const WelcomePage: React.FC = () => {
   const [currentUser, setCurrentUser] = useRecoilState(userState);
@@ -23,7 +22,6 @@ const WelcomePage: React.FC = () => {
           ...u,
           isShownWelcome: false,
         } as User));
-        updateUser(currentUser.id, { isShownWelcome: false });
       }
     }
   }, [currentUser, setCurrentUser]);
