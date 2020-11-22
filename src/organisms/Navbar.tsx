@@ -33,9 +33,9 @@ const Navbar: React.FC = () => {
         </Box>
         <Spacer display={{ base: 'none', md: 'block' }} />
         <Flex alignItems="center" color="gray.600" fontWeight="400" px={{ base: '1rem', md: 0 }}>
-          <RouterLink to="/">
-            <Image src={LogoIcon} w="50px" display={{ base: 'block', md: 'none' }} mr={2} />
-          </RouterLink>
+          <Link as={RouterLink} to="/" w="50px" mr={2} display={{ base: 'block', md: 'none' }}>
+            <Image src={LogoIcon} />
+          </Link>
           {user?.displayName
             ? (
               <>

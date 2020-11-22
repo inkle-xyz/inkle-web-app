@@ -2,10 +2,10 @@ import React from 'react';
 import {
   Button,
   Center,
-  Container, Flex, Heading, Text, Box, Image, SimpleGrid,
+  Container, Flex, Heading, Text, Box, Image, SimpleGrid, Link,
 } from '@chakra-ui/react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { Link } from 'react-router-dom';
+import { Link as BrowserLink } from 'react-router-dom';
 import GoogleColorIcon from '../atoms/GoogleColorIcon';
 import HomeCallout from '../organisms/HomeCallout';
 import { signupWidgetState, userState } from '../recoil/atoms';
@@ -16,6 +16,7 @@ import CommunityWidgets from '../organisms/CommunityWidgets';
 import Navbar from '../organisms/Navbar';
 import Footer from '../organisms/Footer';
 import EditorImage from '../assets/editor.png';
+import AnnouncementBanner from '../organisms/AnnouncementBanner';
 
 const HomePage: React.FC = () => {
   const setSignupWidgetState = useSetRecoilState(signupWidgetState);
@@ -23,6 +24,7 @@ const HomePage: React.FC = () => {
 
   return (
     <Box>
+      <AnnouncementBanner />
       <Navbar />
 
       <Container maxW="800px" px="4rem" mt="5rem" w="100%">
@@ -34,6 +36,21 @@ const HomePage: React.FC = () => {
         <Text mt="2rem" textAlign="center" fontSize="xl">
           Discover, create, and customize beautiful Notion widgets
         </Text>
+        {/* eslint-disable max-len */}
+        <Link
+          href="https://www.producthunt.com/posts/inkle?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-inkle"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Image
+            mx="auto"
+            src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=275451&theme=light"
+            alt="Inkle - Discover, create, and customize beautiful Notion widgets | Product Hunt"
+            mt={4}
+            width="200px"
+            height="54px"
+          />
+        </Link>
         <Center>
           <Flex mt={5} textAlign="center" alignItems="center">
             {
@@ -54,7 +71,7 @@ const HomePage: React.FC = () => {
                       Google
                     </Button>
                   </>
-                ) : <Link to="/dashboard"><Button>Go to Dashboard</Button></Link>
+                ) : <BrowserLink to="/dashboard"><Button>Go to Dashboard</Button></BrowserLink>
             }
           </Flex>
         </Center>
