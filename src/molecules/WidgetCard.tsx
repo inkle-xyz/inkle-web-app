@@ -33,7 +33,7 @@ const WidgetCard: React.FC<WidgetCardProps> = ({
       overflow="hidden"
     >
       {
-        widget?.imageUrl && widget.isFeatured
+        widget?.imageUrl && widget?.imageUrl !== '' && widget.isFeaturedF
           ? (
             <Box
               flexGrow={1}

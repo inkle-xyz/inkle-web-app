@@ -95,7 +95,7 @@ export const cloneWidget = (
   likes: 0,
   isPublished: false,
   isFeatured: false,
-  imageUrl: undefined,
+  imageUrl: '',
 });
 
 export const deleteWidget = (widgetId: string): Promise<void> => widgetsCollection.doc(widgetId).delete();
