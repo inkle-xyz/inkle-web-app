@@ -18,8 +18,12 @@ const AboutPage: React.FC = () => (
         My name is Caelin, and I'm a freshmen at UC Berkeley studying EECS and Business.
         I'm a pretty avid user of Notion, in my academic and professional life,
         I've found it one of the best tools to manage my work and organize my ideas.
-        Inkle was born out of a desire to have more customization within my Notion
-        and a curiosity for what we can accomplish with widgets.
+        Inkle was born out of a desire to have more customization within my Notion,
+        a curiosity for what we can accomplish with widgets,
+        and a five day caffeine-fueled hackathon.
+        This product is completely free and I plan to keep it completely free,
+        because I want to empower the Notion community.
+        Interested in our tech? Send me a message and I'll grant you access to the code!
         I'm driven to create a product that Notion users loves to use as much as I do and
         I'm excited to see what the community creates with Inkle!
       </Text>
