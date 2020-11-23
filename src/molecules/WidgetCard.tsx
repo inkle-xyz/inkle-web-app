@@ -32,18 +32,19 @@ const WidgetCard: React.FC<WidgetCardProps> = ({
       flexDirection="column"
       overflow="hidden"
     >
-      <Box
-        flexGrow={1}
-        onClick={() => onClick()}
-        bgColor="gray.200"
-      >
-        {
-          widget?.imageUrl && widget.isFeatured
-            ? <Image src={widget.imageUrl} mx="auto" />
-            : <Box />
-
-        }
-      </Box>
+      {
+        widget?.imageUrl && widget.isFeatured
+          ? (
+            <Box
+              flexGrow={1}
+              onClick={() => onClick()}
+              bgColor="gray.200"
+            >
+              <Image src={widget.imageUrl} mx="auto" />
+            </Box>
+)
+          : <Box />
+      }
       <Box p={6}>
         <Heading
           mt="1"

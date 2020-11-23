@@ -16,7 +16,6 @@ export interface Widget {
   isPublished: boolean;
   code: string;
   likes?: number;
-  image?: string;
   isFeatured?: boolean;
   imageUrl?: string; // Only if featured
 }
