@@ -467,6 +467,27 @@ const WidgetPageLeft: React.FC = () => {
                           )) : <Text mt={2} color="gray.500">No Variables</Text> : <div />
                     }
                   </WidgetFormGroup>
+                  <WidgetFormGroup title="Style">
+                    {
+                      selectedWidget
+                        ? (
+                          <Flex mt={4} w="100%">
+                            <WidgetPageFormLabel>
+                              Dark Mode
+                            </WidgetPageFormLabel>
+                            <Spacer />
+                            <Switch id="dark-mode"
+                              mt={1}
+                              isChecked={selectedWidget?.isDarkMode}
+                              onChange={() => setSelectedWidget({
+                                ...selectedWidget,
+                                isDarkMode: !selectedWidget.isDarkMode,
+                              })}
+                            />
+                          </Flex>
+                        ) : <Box />
+                    }
+                  </WidgetFormGroup>
                   <Box mt={2} />
                   {
                     currentUser
