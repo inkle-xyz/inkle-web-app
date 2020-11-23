@@ -7,12 +7,14 @@ import { Widget } from '../interfaces/widget.interface';
 
 type WidgetCardProps = {
   widget: Widget;
-  onClone?: (widget: Widget) => void
+  onClone?: (widget: Widget) => void,
+  showAuthor?: boolean,
 }
 
 const WidgetCard: React.FC<WidgetCardProps> = ({
   widget,
   onClone,
+  showAuthor,
 }) => {
   const history = useHistory();
   const {
@@ -66,6 +68,16 @@ const WidgetCard: React.FC<WidgetCardProps> = ({
         >
           {description}
         </Text>
+        {
+          showAuthor
+            ? (
+              <Text color="gray.500" fontSize="sm" mt={2}>
+                Made By
+                {' '}
+                {widget.authorName}
+              </Text>
+            ) : <Box />
+        }
         <Flex
           mt={5}
           justify="space-between"

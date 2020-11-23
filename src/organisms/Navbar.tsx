@@ -1,13 +1,5 @@
 import {
-  Box, Button, Flex, Spacer, Text, Image, Link, MenuButton, Menu, MenuItem, MenuList, Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalBody,
-  ModalCloseButton,
-  useDisclosure,
-  Heading,
-  Center,
-  ModalFooter, Container, Icon,
+  Box, Flex, Spacer, Image, Link, MenuButton, Menu, MenuItem, MenuList, Container, Icon,
 } from '@chakra-ui/react';
 import React from 'react';
 import { Link as RouterLink, useHistory } from 'react-router-dom';
@@ -20,7 +12,6 @@ import { userState } from '../recoil/atoms';
 import AuthModal from '../molecules/AuthModal';
 
 const Navbar: React.FC = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const [user, setUserState] = useRecoilState(userState);
   const history = useHistory();
 
@@ -46,8 +37,10 @@ const Navbar: React.FC = () => {
                 <Menu>
                   <MenuButton as={Link} mr={4}>Account</MenuButton>
                   <MenuList>
-                    <MenuItem onClick={onOpen}>
-                      Account Information
+                    <MenuItem>
+                      <Link as={RouterLink} to="/account">
+                        Account Information
+                      </Link>
                     </MenuItem>
                     <MenuItem onClick={() => {
                       auth.signOut().then(() => {
@@ -81,45 +74,6 @@ const Navbar: React.FC = () => {
         </Flex>
 
         <AuthModal />
-
-        <Modal isOpen={isOpen} onClose={onClose} size="xl">
-          <ModalOverlay />
-          <ModalContent>
-            <ModalCloseButton />
-            <ModalBody p="4rem">
-              <Center mb="3rem">
-                <Heading size="xl" color="gray.700">
-                  Account Information
-                </Heading>
-              </Center>
-              <Heading size="md" color="gray.700" mt={1}>
-                Email
-              </Heading>
-              <Text>
-                {user?.email}
-              </Text>
-
-              <Heading size="md" color="gray.700" mt={3}>
-                Account Since
-              </Heading>
-              <Text>
-                {user?.createdAt}
-              </Text>
-
-              <Heading size="md" color="gray.700" mt={3}>
-                Delete Account
-              </Heading>
-              <Text>
-                {/* eslint-disable-next-line react/no-unescaped-entities */}
-                Please email hello@inkle.xyz if you'd like to delete your account.
-              </Text>
-
-              <ModalFooter>
-                <Button colorScheme="yellow" color="white" mx="auto" size="lg" onClick={onClose}>Close</Button>
-              </ModalFooter>
-            </ModalBody>
-          </ModalContent>
-        </Modal>
       </Flex>
     </Container>
   );

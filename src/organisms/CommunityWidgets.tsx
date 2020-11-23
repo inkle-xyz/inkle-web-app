@@ -99,6 +99,7 @@ const CommunityWidgets: React.FC<Props> = ({ forHome }) => {
                   onClone={!forHome ? onWidgetClone : undefined}
                   key={widget.id}
                   widget={widget}
+                  showAuthor
                 />
               ))
           }
