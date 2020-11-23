@@ -1,5 +1,5 @@
 import {
-  Box, Button, Flex, Heading, Tag, Text,
+  Box, Button, Flex, Heading, Tag, Text, Image,
 } from '@chakra-ui/react';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
@@ -30,6 +30,18 @@ const WidgetCard: React.FC<WidgetCardProps> = ({
       flexDirection="column"
       overflow="hidden"
     >
+      <Box
+        flexGrow={1}
+        onClick={() => onClick()}
+        bgColor="gray.200"
+      >
+        {
+          widget?.imageUrl && widget.isFeatured
+            ? <Image src={widget.imageUrl} mx="auto" />
+            : <Box />
+
+        }
+      </Box>
       <Box p={6}>
         <Heading
           mt="1"

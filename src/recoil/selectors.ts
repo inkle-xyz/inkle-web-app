@@ -6,6 +6,9 @@ export const isUsersWidgetState = selector<boolean>({
   get: ({ get }) => {
     const user = get(userState);
     const currentWidget = get(selectedWidgetState);
+    if (user?.isAdmin) {
+      return true;
+    }
     if (user && currentWidget) {
       return currentWidget.author === user.id;
     }
