@@ -12,6 +12,7 @@ import { getCurrentUser } from './services/auth.services';
 import LoadingPage from './pages/LoadingPage';
 import AdminPage from './pages/AdminPage';
 import AccountPage from './pages/AccountPage';
+import AboutPage from './pages/AboutPage';
 
 const App: React.FC = () => {
   const [user, setUserState] = useRecoilState(userState);
@@ -45,6 +46,7 @@ const App: React.FC = () => {
               />
               <ProtectedRoute path="/account" render={() => <AccountPage />} isAuthenticated={user !== null} />
               <Route path="/" component={HomePage} exact />
+              <Route path="/about" component={AboutPage} exact />
               <Route path="/w/:id" render={(props) => <WidgetForNotionPage id={props.match.params.id} />} />
               <Route
                 path="/widget/:id"

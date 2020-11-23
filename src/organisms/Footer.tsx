@@ -40,10 +40,9 @@ const Footer: React.FC = () => (
             </Flex>
             <Flex justifyContent="center" mt={2}>
               <Link
+                as={BrowserLink}
                 mx={3}
-                target="_blank"
-                rel="noopener noreferrer"
-                href="https://www.notion.so/caelinsutch/Hey-There-e1f6b9bffc404c8083a20618a591d8e3"
+                to="/about"
               >
                 About
               </Link>

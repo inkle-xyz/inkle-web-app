@@ -60,9 +60,8 @@ const Navbar: React.FC = () => {
             Tutorial
           </Link>
           <Link
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://www.notion.so/caelinsutch/Hey-There-e1f6b9bffc404c8083a20618a591d8e3"
+            as={RouterLink}
+            to="/about"
             mr={4}
           >
             About
