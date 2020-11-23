@@ -16,7 +16,7 @@ const AdminWidgetCard: React.FC<Props> = ({
 }) => {
   const history = useHistory();
   const {
-    name, description, id,
+    name, description, id, authorName,
   } = widget;
 
   const onClick = () => {
@@ -46,6 +46,11 @@ const AdminWidgetCard: React.FC<Props> = ({
         >
           {name}
         </Heading>
+        <Text color="gray.500" fontSize="sm">
+          Made By
+          {' '}
+          {authorName}
+        </Text>
         <Text
           mt={2}
           fontSize="sm"
